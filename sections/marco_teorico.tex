@@ -1,4 +1,125 @@
-\section{marco_teorico}
+\section{Marco Teorico}
 
 \subsection{Criptomonedas}
 
+Las criptomonedas sin un sistema digital de intercambio
+descentralizado (peer to peer) en el que la criptografia es usada
+para generar y distribuir esta moneda digital.
+Al no existir ser descentralizado, no existe autoridad u organizacion
+que regule a una criptomoneda, por lo que para las transacciones es
+necesaria algun tipo de verificacion durante este proceso.
+
+\begin{description}
+  \item[$\bullet$] Que el monto sea correcto
+  \item[$\bullet$] Que el remitente tenga los fondos necerarios para
+    la operacion
+  \item[$\bullet$] Asegurarse de que no haya duplicamiento de la unidad (moneda)
+\end{description}
+
+El proceso de aseguramiento y verificacion durante la transaccion es
+parte de lo que se conoce "mineria".
+
+\subsubsection{Tipos de criptomonedas}
+
+El top de criptomonedas mas valiosas varia bastante con el tiempo,
+asi como la lista de empresas mas valiosas que cotizan en el mercado,
+esta tabla enlista aquellas mas representativas.
+
+\begin{table}[ht]
+  \centering
+  \caption{Comparativa de Criptomonedas Principales}
+  \begin{tabularx}{\textwidth}{|X|X|X|X|}
+    \hline
+    \textbf{Bitcoin} & \textbf{Ethereum} & \textbf{Ripple} &
+    \textbf{Litecoin} \\ \hline
+    Primera criptomoneda digital con fecha de publicación del 2009,
+    registra las transacciones en el ``Blockchain''. El sistema es
+    sustentado por nodos que resuelven problemas matemáticos
+    complejos (conocido como ``minería'') y además verificar la
+    compra o venta de Bitcoin. &
+    Lanzada en 2015, blockchain con una plataforma que permite
+    contratos inteligentes, aplicaciones pueden ser construidas
+    (desde herramientas financieras hasta juegos o bases de datos
+    complejas), el límite es la imaginación del desarrollador sin
+    caídas, fraudes, control o autoridad central. &
+    Se vio por primera vez en el 2012, se presenta como una red de
+    liquidación global en tiempo real que ofrece al instante y con un
+    costo bajo, pagos internacionales. Ofrece una alternativa a
+    bancos pagos transfronterizos a bajo costo y transparencia de
+    punto a punto. &
+    Creada por un graduado del MIT e ingeniero de Google. Es referido
+    comúnmente como la moneda de plata del oro de Bitcoin. Está
+    basada en una red de pago de código abierto. Es bastante parecida
+    a Bitcoin, su tasa de generación de bloques es alta así como su
+    tiempo de confirmación de transacciones. \\ \hline
+  \end{tabularx}
+\end{table}
+
+Siendo Bitccoin la moneda mas representativa o valorada en este
+mercado, se usara de ejemplo en este documento para dar expolicacion
+sobre el fundamento, creacion y mantenimiento de las cxcriptomonedas
+de manera general.
+
+\subsubsection{Blockain}
+
+El blockchain de Bitcoin basicamente es un registro publico quye
+aloja todas las transacciones hechas, ademas de incluir la creacion
+de nuevas unidades. Se crea una cadena de bloques mediante la
+conexion del bloque nuevo con la referencia de los anteriores.
+
+Los componentes principales de un bloque son:
+
+\begin{description}
+  \item[$\bullet$] Un valor hash que referencia al bloque inmediato
+    que lo precede
+  \item[$\bullet$] Referencia propia
+  \item[$\bullet$] Fecha de creacion
+  \item[$\bullet$] Informacion: Transacciones hechas durante la
+    creacion del bloque
+\end{description}
+
+\subsubsection{Como se sustenta el sistema}
+
+Para entender el mecanismo que soporta el Bitcoin, es necesario
+primero hablar sobre el rol de un minero en este sistema. Un minero
+junta o recolecta transacciones de Bitcoin, ayuda a verificar su
+legitimidad (monto correcto, fondos suficientes, sin duplicados) y
+los almacena como ‘candidatos a bloque’.
+
+Quien quiera puede convertirse en minero, el único requisito es
+descargar el software y una copia reciente del Blockchain.
+Actualmente la carrera por la nueva creación de bloques se ha vuelto
+compleja debido a la alta demanda computacional lo que lleva a la
+creación de granjas de minería con hardware altamente especializado,
+lo que se traduce en alto consumo eléctrico (para mantener el
+hardware prendido y enfriarlo) y una huella enorme de carbón.
+
+Para que un bloque sea aceptado en el Blockchain, es necesario que se
+cumplan criterios especificos:
+
+\begin{description}
+  \item[$\bullet$] Todas las transacciones registradas tienen que ser LEGITIMAS
+  \item[$\bullet$] Fingerprint (Huella digital valida)
+\end{description}
+
+Este `fingerprint` se logra al sacar el valor hash del bloque
+candidato usando la funcion hash dSHA256, no basta con obtener
+cualquier valor aleatorio, se requiere que esta huella tenga una
+caracteristica que lo haga unico (dificil de encontrar).
+
+\begin{description}
+  \item[$\bullet$] Valor debajo de un limite
+  \item[$\bullet$] Se deben de mostrar multiples ceros al inicio de la cadena
+\end{description}
+
+Los mineros constantemente se encuentran resolviendo este problema de
+buscar entradas que devuelvan estos valores hash de alta rareza. Si
+un minero llega a encontrar un valor aceptado, se añade el bloque
+inmediatamente al sistema y quienes participan pueden verificar por
+sí mismos que el bloque sea válido.
+
+Por cada bloque nuevo añadido al Blockchain, el sistema crea nuevos
+Bitcoins, y todo aquel participante recibe en proporción un premio en
+forma de una fracción de Bitcoin. a su vez, por cada ciertos bloques
+creados, el sistema disminuye gradualmente la cantidad de nuevos
+Bitcoin creados, este tiene un tope máximo de 21 millones de monedas

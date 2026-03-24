@@ -1,0 +1,35 @@
+\section{Propuesta PSO}
+\subsection{Datos del mercado}
+
+Los datos utilizados en este trabajo corresponden a precios
+históricos de criptomonedas, los cuales fueron obtenidos mediante la
+biblioteca \texttt{yfinance} de Python, que permite acceder a
+información financiera desde fuentes públicas.
+
+Se seleccionaron las siguientes criptomonedas: Bitcoin, Ethereum,
+Ripple y Litecoin, debido a su relevancia dentro del mercado y
+disponibilidad de datos históricos.
+
+El periodo de análisis abarca desde [AÑO] hasta [AÑO], utilizando una
+frecuencia [diaria/semanal], lo que permite capturar el
+comportamiento del mercado y su volatilidad en el tiempo.
+
+A partir de estos datos, se calcularon los rendimientos logarítmicos
+de cada activo, los cuales son utilizados como base para la
+construcción y evaluación de los portafolios.
+\begin{equation}
+  r_t = \ln\left(\frac{P_t}{P_{t-1}}\right)
+\end{equation}
+Donde \( P_t \) representa el precio del activo en el tiempo \( t \).
+
+El motivo de utilizar rendimientos logarítmicos radica en su
+capacidad para manejar mejor las variaciones porcentuales y su
+propiedad de aditividad, lo que facilita el análisis de los
+portafolios y la comparación entre diferentes activos.
+\subsection{Como se maneja la volatilidad}
+\subsubsection{Funcion objetivo}
+\subsubsection{Modelo CGARCH}
+\subsection{Parametros del algoritmo}
+\section{Resultados}
+\section{Analisis de resultados}
+\section{Conclusiones}

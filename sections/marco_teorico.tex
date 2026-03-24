@@ -1,6 +1,4 @@
-\section{Marco Teorico}
-
-\subsection{Criptomonedas}
+\section{Criptomonedas}
 
 Las criptomonedas sin un sistema digital de intercambio
 descentralizado (peer to peer) en el que la criptografia es usada
@@ -19,7 +17,7 @@ necesaria algun tipo de verificacion durante este proceso.
 El proceso de aseguramiento y verificacion durante la transaccion es
 parte de lo que se conoce como "mineria".
 
-\subsubsection{Tipos de criptomonedas}
+\subsection{Tipos de criptomonedas}
 
 El top de criptomonedas mas valiosas varia bastante con el tiempo,
 asi como la lista de empresas mas valiosas que cotizan en el mercado,
@@ -51,7 +49,7 @@ mercado, se usara de ejemplo en este documento para dar expolicacion
 sobre el fundamento, creacion y mantenimiento de las cxcriptomonedas
 de manera general.
 
-\subsubsection{Blockain}
+\subsection{Blockain}
 
 El blockchain de Bitcoin basicamente es un registro publico quye
 aloja todas las transacciones hechas, ademas de incluir la creacion
@@ -69,7 +67,7 @@ Los componentes principales de un bloque son:
     creacion del bloque
 \end{itemize}
 
-\subsubsection{Como se sustenta el sistema}
+\subsection{Como se sustenta el sistema}
 
 Para entender el mecanismo que soporta el Bitcoin, es necesario
 primero hablar sobre el rol de un minero en este sistema. Un minero
@@ -115,7 +113,7 @@ forma de una fracción de Bitcoin. a su vez, por cada ciertos bloques
 creados, el sistema disminuye gradualmente la cantidad de nuevos
 Bitcoin creados, este tiene un tope máximo de 21 millones de monedas
 
-\subsubsection{Volatilidad del mercado}
+\subsection{Volatilidad del mercado}
 
 La volatilidad extrema de las criptomonedas, en particular Bitcoin,
 puede explicarse por la falta de un valor intrínseco o fundamental
@@ -124,7 +122,7 @@ se impulsan por el sentimiento del mercado, la especulación y las
 narrativas de los medios, lo que lleva a la formación de burbujas ya
 un compartimiento de efecto de rebaño entre los inversores
 
-\subsection{Optimizacion de Portafolios}
+\section{Optimizacion de Portafolios}
 
 De manera convencional, el manejo de portafolios se refiere al
 proceso de identificar, seleccionar y manejar un conjunto de
@@ -159,12 +157,12 @@ pero los problemas principales se resumen en:
   \item Maximizar el rendimiento sin importar el riesgo
 \end{enumerate}
 
-\subsubsection{Definiciones}
-\paragraph{Rendimento del activo:}
+\subsection{Definiciones}
+\subsubsection{Rendimento del activo:}
 Expresado como la tasa de rendimiento que se define durante un
 periodo de tiempo. Una perdida es representada como un valor negativo
 
-\paragraph{Portafolio:}
+\subsubsection{Portafolio:}
 Una colección de dos o más activos. El rendimiento esperado (por
 periodo) se define
 como la suma ponderada del rendimiento de cada activo, sujeto a que
@@ -174,35 +172,191 @@ la suma total sea 1:
   \sum_{i=1}^{n} w_i = 1
 \end{gather}
 
-\paragraph{Short selling:}
+\subsubsection{Short selling:}
 Es un proceso por el cual un inversionista que no posee un activo,
 define una posición en el mercado vendiendo el activo por anticipado,
 lo que provoca en una caída del precio. Esto matemáticamente se
 representa tomando el valor del activo como negativo. Para el modelo
 de Markowitz se excluye esta práctica.
 
-\paragraph{Portafolio eficiente:}
+\subsubsection{Portafolio eficiente:}
 Un portafolio factible es eficiente si tiene el máximo rendimiento
 esperado entre todos los portafolios con la misma varianza o
 alternativamente si tiene el menor riesgo entre todos los portafolios
 que tienen el mismo rendimiento esperado
 
-\paragraph{Frontera eficiente:}
+\subsubsection{Frontera eficiente:}
 Es un concepto fundamental que permite visualizar las contras y
 ventajas entre riesgo/rendimiento, representa el conjunto de
 portafolios que proveen el rendimiento mas alto de acuerdo a un
 riesgo dado, o alternativamente llos portafolios que tienen un riesgo
 minimo segun un rendimiento dado.
 
-\subsubsection{Indicadores de riesgo}
+\subsection{Indicadores de riesgo}
 
-\paragraph{Varianza:}
+\subsubsection{Varianza:}
 Dispersión de los rendimientos; mientras mayor
 sea, más inciertos son los resultados.
-\paragraph{Semivarianza:}Solo mide la dispersión hacia abajo (riesgo
+\subsubsection{Semivarianza:}Solo mide la dispersión hacia abajo (riesgo
 de pérdidas).
-\paragraph{Desviacion estandar:}Mide la volatilidad total de los activos.
-\paragraph{Value at Risk (VaR):}Pérdida máxima esperada dado un cierto
+\subsubsection{Desviacion estandar:}Mide la volatilidad total de los activos.
+\subsubsection{Value at Risk (VaR):}Pérdida máxima esperada dado un cierto
 nivel de confianza.
-\paragraph{Conditional Value at Risk (CVaR):} Pérdida promedio en los
+\subsubsection{Conditional Value at Risk (CVaR):} Pérdida promedio en los
 peores casos.
+
+\subsection{Formas de representar un portafolio}
+Usar el peso por cada activo no trabajan bien, esto se debe a que con
+esta representación, frecuentemente se producen soluciones no
+factibles en el cual la suma total del portafolio (Inversión hecha
+con el presupuesto dado) no es 1, y esto es una restricción básica de
+este modelo
+
+La necesidad de representar de distintas maneras un portafolio se
+debe a que las restricciones que se consideren complejas se puedan
+incluir de manera mas natural, ademas de que se puede permitir
+explorar un espacio de búsqueda aún más amplio, y también se pueden
+adaptar diferentes objetivos que van más allá del rendimiento-riesgo
+
+\subsubsection{Campo de bits para cada activo}
+El primer bit de la cadena tiene un propósito especial: indica si la
+posición en este activo es larga o corta, lo que permite al inversor
+obtener ganancias tanto si el precio sube como si baja. Los k bits
+restantes no representan el precio del activo directamente, sino que
+funcionan como un índice que apunta a un valor específico en una
+tabla, que contiene los posibles pesos que el activo puede tener en
+el portafolio
+
+\subsubsection{Tipo mochila (Knapsack)}
+Está inspirada en el famoso problema de la mochila, Aquí se utiliza
+un bit para cada activo que se considera: si el bit es 1, el activo
+se incluye en el portafolio y si es 0, se excluye. Esto simplifica el
+problema a enfocarse solo en la selección de activos, sin considerar
+sus pesos exactos
+
+\subsubsection{Codigos gray}
+Variación de la codificación binaria que asegura que solo un bit
+cambia entre dos valores numéricos consecutivos,. Puede ayudar a
+mejorar la eficiencia de los algoritmo evolutivos el evitar saltos
+grandes en el espacio de búsqueda
+
+\subsubsection{Representacion hibrida}
+Combina dos partes distintas de un cromosoma:
+
+\begin{itemize}
+  \item Primer parte contiene una secuencia que determina
+    las identidades de los activos que se incluyen en el portafolio.
+    Es decir esta parte decide que activos se eligen
+  \item Después de que la primer parte ha
+    seleccionado los activos, esta segunda determina los pesos o la
+    proporción de la inversión que se asignará a cada uno de ellos
+\end{itemize}
+
+\subsection{Reestricciones del mundo real}
+Inicialmente el modelo de Markowitz consideraba sólo una restricción,
+la suma del peso de los activos debe de ser 1, en otras palabras, se
+tiene que usar todo el capital.
+
+\subsubsection{Limites minimos y maximos}
+Se imponen límites inferiores y/o superiores en los valores de cada
+peso activo, esto significa que un activo no puede representar menos
+o más que alguna proporción del capital total
+\begin{itemize}
+  \item Limite Inferior: No dedicar porcentajes muy pequeños del
+    capital a muchos valores (debido a que se generaron altos costos
+    de transacción)
+  \item Limite Superior: No asignar una proporción grande del capital
+    total a un activo, con el fin de minimizar el riesgo (Obligando a
+    diversificar)
+\end{itemize}
+
+\subsubsection{Cardinalidad}
+Esta restricción obliga al número de activos seleccionados en un
+portafolio. Existen dos versiones:
+\begin{itemize}
+  \item Exacta: Impone que el número de valores seleccionados sea
+    igual a un valor K
+  \item Suave: Proporciona limites inferiores e superiores para el
+    número de activos seleccionados, por ejemplo, al menos 5 y no más de 10
+\end{itemize}
+
+Cuando se impone esta restricción, no hay un método exacto para
+resolver el problema de optimización de portafolios, la frontera de
+pareto puede ser discontinua y/o no convexa, lo que causa
+dificultades si se usan algún acercamiento basado en funciones lineales
+
+Las estrategias más comunes para manejar la cardinalidad es usar
+alguna función que penalice, también de los portafolios con una
+cardinalidad alta, se eliminan los activos con menor peso hasta
+cumplir con este valor K
+
+\subsubsection{Rotacion}
+Se refiere al cambio en el peso de los activos, respecto a una
+asignación anterior. Es útil cuando se considera una inversión
+durante un periodo largo. En el modelo tradicional, sin restricciones
+adicionales, el algoritmo puede proponer grandes cambios en la
+composición de los portafolios, y esto puede ser costoso porque se
+generan gastos  de comisión o impuestos.
+
+El objetivo es reducir costos por transacciones, mantener estabilidad
+en la estrategia y evitar cambios bruscos. La rotación se calcula
+como la suma de las diferencias absolutas entre los pesos nuevos y
+los anteriores. Si esta suma excede de un límite predefinido, la
+solución no es aceptada
+
+\section{Metaheuristica}
+La metaheurística es un campo de la informática y la optimización que
+se enfoca en el desarrollo de algoritmos de alto nivel para
+encontrar, de manera eficiente, soluciones aproximadas a problemas de
+optimización complejos, especialmente aquellos para los que no se
+conoce un algoritmo exacto o el tiempo de ejecución de un algoritmo
+exacto es largo. A diferencia de los métodos heurísticos simples, una
+metaheurística está diseñada para guiar el proceso de búsqueda a
+través del espacio de soluciones, evitando quedarse atrapada en
+óptimos locales y permitiendo una variedad más amplia de soluciones posibles.
+
+\subsection{Algoritmos bioinspirados}
+Toman su inspiración de procesos y comportamientos observados en la
+naturaleza y la biología, tales como el proceso de evolución, el
+comportamiento de enjambre, forrajeo (actividad de buscar alimentos)
+y el crecimiento de las plantas La idea principal detrás de estos
+algoritmos es imitar la eficiencia de la naturaleza para resolver
+problemas complejos.
+
+Tras un rápido crecimiento tecnológico, la complejidad computacional
+ha incrementado para resolver problemas del mundo real como:
+optimización,  clasificación, planeación y control. Estos
+problemas se caracterizan por su alta dimensionalidad, no linealidad,
+entornos dinámicos, los métodos tradicionales de optimización suelen
+quedar cortos contra estos problemas, debido a ser rígidos, las
+limitantes particulares son las combinaciones a gran escala o
+espacios de búsqueda enormes, donde la adaptabilidad y exploración
+son críticos.
+
+\section{Optimizacion por enjambre de particulas (PSO)}
+Optimización de Enjambre de Partículas PSO
+Desarrollada por Kennedy y Eberhart, esta metaheurística tiene
+inspiración del comportamiento social observado en grupos de
+individuos dentro de: parvadas o cardúmenes. Este comportamiento se
+basa en la transmisión del suceso de cada individuo a los demás del
+grupo, esto resulta en satisfacer más rápido sus necesidades, como la
+localización de alimento o un lugar de cobijo.
+
+El algoritmo de PSO identifica la solución óptima explorando
+exhaustivamente el espacio de la función objetivo a través del ajuste
+sistemático de las rutas de cada individuo, llamado partícula. Cada
+partícula en el enjambre tiene propiedades inherentes como la
+posición y la velocidad, que les ayudan a moverse hacia una posición
+óptima, esta partícula tiene una tendencia a moverse aleatoriamente
+con la probabilidad de visitar un lugar inexplorado. Pero al mismo
+tiempo, cada partícula es atraída hacia su mejor posición personal
+(hasta la iteración actual), así como la mejor posición global del
+enjambre. El objetivo de PSO es encontrar la posición óptima en el
+espacio de búsqueda, considerando las mejores soluciones asociadas a
+cada partícula, este proceso termina cuando no hay mejora del valor
+de la función objetivo o se alcanza un límite de iteraciones.
+
+\subsection{Pseudocódigo}
+
+\subsection{Modelos de velocidad}
+\subsection{Topologias de comunicación}

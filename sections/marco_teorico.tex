@@ -1,362 +1,291 @@
 \section{Criptomonedas}
 
-Las criptomonedas sin un sistema digital de intercambio
-descentralizado (peer to peer) en el que la criptografia es usada
-para generar y distribuir esta moneda digital.
-Al no existir ser descentralizado, no existe autoridad u organizacion
-que regule a una criptomoneda, por lo que para las transacciones es
-necesaria algun tipo de verificacion durante este proceso.
+Las criptomonedas son un sistema digital de intercambio
+descentralizado (\textit{peer to peer}) en el que la criptografía se
+utiliza para generar y transferir valor. Al ser descentralizadas, no
+existe una autoridad única que las regule; por ello, en cada
+transacción se requiere un mecanismo de verificación.
 
 \begin{itemize}
-  \item Que el monto sea correcto
-  \item Que el remitente tenga los fondos necerarios para
-    la operacion
-  \item Asegurarse de que no haya duplicamiento de la unidad (moneda)
+  \item Verificar que el monto sea correcto.
+  \item Verificar que el remitente tenga fondos suficientes.
+  \item Evitar el doble gasto de una misma unidad monetaria.
 \end{itemize}
 
-El proceso de aseguramiento y verificacion durante la transaccion es
-parte de lo que se conoce como "mineria".
+Este proceso de aseguramiento y verificación forma parte de lo que se
+conoce como minería.
 
 \subsection{Tipos de criptomonedas}
 
-El top de criptomonedas mas valiosas varia bastante con el tiempo,
-asi como la lista de empresas mas valiosas que cotizan en el mercado,
-esta tabla enlista aquellas mas representativas.
+El conjunto de criptomonedas más valiosas cambia con el tiempo. En la
+Tabla~\ref{tab:cripto-comparativa} se presentan algunas de las más
+representativas.
 
 \begin{table}[ht]
   \centering
-  \caption{Comparativa de Criptomonedas Principales}
-  \begin{tabularx}{\textwidth}{XXXX} % Sin líneas verticales (|)
-    \toprule % Línea gruesa superior
+  \caption{Comparativa de criptomonedas principales}
+  \label{tab:cripto-comparativa}
+  \begin{tabularx}{\textwidth}{XXXX}
+    \toprule
     \textbf{Bitcoin} & \textbf{Ethereum} & \textbf{Ripple} &
-    \textbf{Litecoin} \\ \midrule % Línea media
+    \textbf{Litecoin} \\ \midrule
 
-    Primera criptomoneda digital con fecha de publicación del 2009,
-    registra las transacciones en el ``Blockchain''. &
-    Lanzada en 2015, plataforma que permite contratos inteligentes y
-    aplicaciones descentralizadas. &
-    Red de liquidación global en tiempo real que ofrece pagos
-    internacionales a bajo costo. &
-    Basada en código abierto, con una tasa de generación de bloques
-    más alta que Bitcoin. \\
+    Primera criptomoneda digital (2009); registra transacciones en la
+    cadena de bloques. &
+    Lanzada en 2015, permite contratos inteligentes y aplicaciones
+    descentralizadas. &
+    Red de liquidación global en tiempo real para pagos
+    internacionales de bajo costo. &
+    Basada en código abierto, con mayor tasa de generación de bloques
+    que Bitcoin. \\
 
-    \bottomrule % Línea inferior
+    \bottomrule
   \end{tabularx}
 \end{table}
 
-Siendo Bitccoin la moneda mas representativa o valorada en este
-mercado, se usara de ejemplo en este documento para dar expolicacion
-sobre el fundamento, creacion y mantenimiento de las cxcriptomonedas
-de manera general.
+Debido a su relevancia histórica y de mercado, Bitcoin se utiliza en
+este documento como referencia para explicar de manera general el
+fundamento, la creación y el mantenimiento de las criptomonedas.
 
-\subsection{Blockain}
+\subsection{Blockchain}
 
-El blockchain de Bitcoin basicamente es un registro publico quye
-aloja todas las transacciones hechas, ademas de incluir la creacion
-de nuevas unidades. Se crea una cadena de bloques mediante la
-conexion del bloque nuevo con la referencia de los anteriores.
+La \textit{blockchain} de Bitcoin es, en esencia, un registro público
+que almacena todas las transacciones realizadas, además de la creación
+de nuevas unidades. La cadena se construye enlazando cada bloque nuevo
+con referencias criptográficas a bloques anteriores.
 
 Los componentes principales de un bloque son:
 
 \begin{itemize}
-  \item Un valor hash que referencia al bloque inmediato
-    que lo precede
-  \item Referencia propia
-  \item Fecha de creacion
-  \item Informacion: Transacciones hechas durante la
-    creacion del bloque
+  \item Un hash de referencia al bloque previo.
+  \item El hash propio del bloque.
+  \item Fecha de creación.
+  \item Información de transacciones incluidas.
 \end{itemize}
 
-\subsection{Como se sustenta el sistema}
+\subsection{Cómo se sustenta el sistema}
 
-Para entender el mecanismo que soporta el Bitcoin, es necesario
-primero hablar sobre el rol de un minero en este sistema. Un minero
-junta o recolecta transacciones de Bitcoin, ayuda a verificar su
-legitimidad (monto correcto, fondos suficientes, sin duplicados) y
-los almacena como ‘candidatos a bloque’.
+Para entender el mecanismo de Bitcoin, es necesario describir el rol
+del minero. Un minero recolecta transacciones, valida su legitimidad
+(monto correcto, fondos suficientes y ausencia de duplicados) y las
+agrupa como candidatas a bloque.
 
-Quien quiera puede convertirse en minero, el único requisito es
-descargar el software y una copia reciente del Blockchain.
-Actualmente la carrera por la nueva creación de bloques se ha vuelto
-compleja debido a la alta demanda computacional lo que lleva a la
-creación de granjas de minería con hardware altamente especializado,
-lo que se traduce en alto consumo eléctrico (para mantener el
-hardware prendido y enfriarlo) y una huella enorme de carbón.
+Cualquier persona puede participar como minero con el software y una
+copia actualizada de la cadena de bloques. En la práctica, la minería
+se ha vuelto altamente competitiva por la demanda computacional, lo
+que implica hardware especializado y alto consumo energético.
 
-Para que un bloque sea aceptado en el Blockchain, es necesario que se
-cumplan criterios especificos:
+Para que un bloque sea aceptado, deben cumplirse condiciones básicas:
 
 \begin{itemize}
-  \item Todas las transacciones registradas tienen que ser LEGITIMAS
-  \item Fingerprint (Huella digital valida)
+  \item Todas las transacciones deben ser válidas.
+  \item El hash del bloque debe cumplir la condición de dificultad.
 \end{itemize}
 
-Este `fingerprint` se logra al sacar el valor hash del bloque
-candidato usando la funcion hash dSHA256, no basta con obtener
-cualquier valor aleatorio, se requiere que esta huella tenga una
-caracteristica que lo haga unico (dificil de encontrar).
+Esa condición se obtiene al aplicar la función hash doble SHA-256 al
+bloque candidato. No basta cualquier resultado; el valor debe cumplir
+un criterio específico de rareza:
 
 \begin{itemize}
-  \item Valor debajo de un limite
-  \item Se deben de mostrar multiples ceros al inicio de la cadena
+  \item Estar por debajo de un umbral objetivo.
+  \item Presentar múltiples ceros iniciales en su representación.
 \end{itemize}
 
-Los mineros constantemente se encuentran resolviendo este problema de
-buscar entradas que devuelvan estos valores hash de alta rareza. Si
-un minero llega a encontrar un valor aceptado, se añade el bloque
-inmediatamente al sistema y quienes participan pueden verificar por
-sí mismos que el bloque sea válido.
-
-Por cada bloque nuevo añadido al Blockchain, el sistema crea nuevos
-Bitcoins, y todo aquel participante recibe en proporción un premio en
-forma de una fracción de Bitcoin. a su vez, por cada ciertos bloques
-creados, el sistema disminuye gradualmente la cantidad de nuevos
-Bitcoin creados, este tiene un tope máximo de 21 millones de monedas
+Cuando un minero encuentra un hash válido, el bloque se agrega a la
+cadena y el resto de la red puede verificarlo. Como incentivo, se
+otorga una recompensa en Bitcoin y comisiones de transacción. Además,
+la emisión de nuevos bitcoins disminuye de forma programada hasta un
+máximo de 21 millones de monedas.
 
 \subsection{Volatilidad del mercado}
 
-La volatilidad extrema de las criptomonedas, en particular Bitcoin,
-puede explicarse por la falta de un valor intrínseco o fundamental
-que pueda servir como un ancla para su precio. en cambio, los precios
-se impulsan por el sentimiento del mercado, la especulación y las
-narrativas de los medios, lo que lleva a la formación de burbujas ya
-un compartimiento de efecto de rebaño entre los inversores
+La volatilidad de las criptomonedas, en particular de Bitcoin, suele
+relacionarse con la ausencia de un valor fundamental único que funcione
+como ancla de precio. En consecuencia, los movimientos se ven
+influenciados por el sentimiento del mercado, la especulación y las
+narrativas mediáticas, lo cual favorece episodios de burbuja y efecto
+rebaño entre inversionistas.
 
-\section{Optimizacion de Portafolios}
+\section{Optimización de portafolios}
 
-De manera convencional, el manejo de portafolios se refiere al
-proceso de identificar, seleccionar y manejar un conjunto de
-inversiones. Estos procesos implican la selección de activos,
-asignación de recursos, seguimiento del rendimiento a través del
-tiempo y la actualización del portafolio.
+El manejo de portafolios se refiere al proceso de identificar,
+seleccionar y administrar un conjunto de inversiones. Esto incluye la
+asignación de recursos, el seguimiento del desempeño y la
+actualización del portafolio en el tiempo.
 
-Los orígenes de este problema de optimización de portafolios hecha
-con un modelo matemático, datan desde las contribuciones que Harry
-Markowitz hizo en el año 1952 con su gran aporte que fue parteaguas
-para la economía financiera, formando la fundación de lo que hoy se
-conoce como Teoría del Portafolio Moderno. Desde entonces, este campo
-se ha vuelto inmenso.
+El problema de optimización de portafolios se formalizó con el trabajo
+de Harry Markowitz (1952), base de la Teoría Moderna del Portafolio.
 
 \begin{center}
   \itshape
-  ``Optimización de portafolio, se puede definir como el uso de
-  métodos matemáticos que apoya la selección de portafolios de
-  activos a elección teniendo en cuenta la preferencia de toma de
-  decisiones, límites relevantes e incertidumbre''
+  ``La optimización de portafolios puede definirse como el uso de
+  métodos matemáticos para seleccionar activos considerando
+  preferencias de decisión, restricciones relevantes e incertidumbre.''
 \end{center}
 
-Este problema matemático puede ser formulado de distintas maneras,
-pero los problemas principales se resumen en:
+Este problema puede formularse de distintas maneras:
 
 \begin{enumerate}[label=\Roman*., leftmargin=1.5cm]
-  \item Minimizar el riesgo para un rendimiento establecido
-  \item Maximizar el rendimiento esperado dado un riesgo establecido
-  \item Minimizar el riesgo y maximizar el rendimiento esperado
-    usando un factor de rechazo de riesgo especificado
-  \item Minimizar el riesgo sin importar el rendimiento esperado
-  \item Maximizar el rendimiento sin importar el riesgo
+  \item Minimizar el riesgo para un rendimiento objetivo.
+  \item Maximizar el rendimiento esperado para un nivel de riesgo dado.
+  \item Balancear riesgo y rendimiento con un factor de aversión al riesgo.
+  \item Minimizar el riesgo sin imponer meta de rendimiento.
+  \item Maximizar el rendimiento sin imponer límite de riesgo.
 \end{enumerate}
 
 \subsection{Definiciones}
-\subsubsection{Rendimento del activo:}
-Expresado como la tasa de rendimiento que se define durante un
-periodo de tiempo. Una perdida es representada como un valor negativo
+\subsubsection{Rendimiento del activo}
+Es la tasa de ganancia o pérdida en un periodo de tiempo. Una pérdida
+se representa con un valor negativo.
 
-\subsubsection{Portafolio:}
-Una colección de dos o más activos. El rendimiento esperado (por
-periodo) se define
-como la suma ponderada del rendimiento de cada activo, sujeto a que
-la suma total sea 1:
+\subsubsection{Portafolio}
+Es una colección de dos o más activos. El rendimiento esperado del
+portafolio se define como la suma ponderada de los rendimientos
+individuales, con la restricción de presupuesto:
 \begin{gather}
   R_p = \sum_{i=1}^{n} w_i R_i \\
   \sum_{i=1}^{n} w_i = 1
 \end{gather}
 
-\subsubsection{Short selling:}
-Es un proceso por el cual un inversionista que no posee un activo,
-define una posición en el mercado vendiendo el activo por anticipado,
-lo que provoca en una caída del precio. Esto matemáticamente se
-representa tomando el valor del activo como negativo. Para el modelo
-de Markowitz se excluye esta práctica.
+En notación vectorial, el rendimiento esperado del portafolio se
+escribe como:
+\begin{equation}
+  \mu_p = \mathbf{w}^{\top}\boldsymbol{\mu}
+\end{equation}
 
-\subsubsection{Portafolio eficiente:}
-Un portafolio factible es eficiente si tiene el máximo rendimiento
-esperado entre todos los portafolios con la misma varianza o
-alternativamente si tiene el menor riesgo entre todos los portafolios
-que tienen el mismo rendimiento esperado
+El riesgo del portafolio medido por varianza se expresa como:
+\begin{equation}
+  \sigma_p^2 = \mathbf{w}^{\top}\Sigma\mathbf{w}
+\end{equation}
 
-\subsubsection{Frontera eficiente:}
-Es un concepto fundamental que permite visualizar las contras y
-ventajas entre riesgo/rendimiento, representa el conjunto de
-portafolios que proveen el rendimiento mas alto de acuerdo a un
-riesgo dado, o alternativamente llos portafolios que tienen un riesgo
-minimo segun un rendimiento dado.
+\subsubsection{Short selling}
+Es la venta de un activo que no se posee, con la expectativa de
+recomprarlo a menor precio. En términos de modelado, suele asociarse a
+pesos negativos. En el modelo clásico de Markowitz, esta práctica
+puede excluirse imponiendo $w_i \ge 0$.
+
+\subsubsection{Portafolio eficiente}
+Un portafolio factible es eficiente si maximiza el rendimiento
+esperado para un nivel de riesgo dado, o equivalentemente, minimiza
+el riesgo para un rendimiento esperado dado.
+
+\subsubsection{Frontera eficiente}
+Es el conjunto de portafolios eficientes que describe el mejor
+intercambio posible entre riesgo y rendimiento.
 
 \subsection{Indicadores de riesgo}
-
-\subsubsection{Varianza:}
-Dispersión de los rendimientos; mientras mayor
-sea, más inciertos son los resultados.
-\subsubsection{Semivarianza:}Solo mide la dispersión hacia abajo (riesgo
-de pérdidas).
-\subsubsection{Desviacion estandar:}Mide la volatilidad total de los activos.
-\subsubsection{Value at Risk (VaR):}Pérdida máxima esperada dado un cierto
-nivel de confianza.
-\subsubsection{Conditional Value at Risk (CVaR):} Pérdida promedio en los
-peores casos.
-
-\subsection{Formas de representar un portafolio}
-Usar el peso por cada activo no trabajan bien, esto se debe a que con
-esta representación, frecuentemente se producen soluciones no
-factibles en el cual la suma total del portafolio (Inversión hecha
-con el presupuesto dado) no es 1, y esto es una restricción básica de
-este modelo
-
-La necesidad de representar de distintas maneras un portafolio se
-debe a que las restricciones que se consideren complejas se puedan
-incluir de manera mas natural, ademas de que se puede permitir
-explorar un espacio de búsqueda aún más amplio, y también se pueden
-adaptar diferentes objetivos que van más allá del rendimiento-riesgo
-
-\subsubsection{Campo de bits para cada activo}
-El primer bit de la cadena tiene un propósito especial: indica si la
-posición en este activo es larga o corta, lo que permite al inversor
-obtener ganancias tanto si el precio sube como si baja. Los k bits
-restantes no representan el precio del activo directamente, sino que
-funcionan como un índice que apunta a un valor específico en una
-tabla, que contiene los posibles pesos que el activo puede tener en
-el portafolio
-
-\subsubsection{Tipo mochila (Knapsack)}
-Está inspirada en el famoso problema de la mochila, Aquí se utiliza
-un bit para cada activo que se considera: si el bit es 1, el activo
-se incluye en el portafolio y si es 0, se excluye. Esto simplifica el
-problema a enfocarse solo en la selección de activos, sin considerar
-sus pesos exactos
-
-\subsubsection{Codigos gray}
-Variación de la codificación binaria que asegura que solo un bit
-cambia entre dos valores numéricos consecutivos,. Puede ayudar a
-mejorar la eficiencia de los algoritmo evolutivos el evitar saltos
-grandes en el espacio de búsqueda
-
-\subsubsection{Representacion hibrida}
-Combina dos partes distintas de un cromosoma:
+Si no se pretende profundizar en todas las métricas en esta etapa,
+conviene listarlas de forma breve:
 
 \begin{itemize}
-  \item Primer parte contiene una secuencia que determina
-    las identidades de los activos que se incluyen en el portafolio.
-    Es decir esta parte decide que activos se eligen
-  \item Después de que la primer parte ha
-    seleccionado los activos, esta segunda determina los pesos o la
-    proporción de la inversión que se asignará a cada uno de ellos
+  \item \textbf{Varianza}: dispersión total de los rendimientos.
+  \item \textbf{Semivarianza}: dispersión únicamente por debajo de un umbral.
+  \item \textbf{Desviación estándar}: raíz de la varianza; mide volatilidad.
+  \item \textbf{Value at Risk (VaR)}: pérdida máxima esperada para un nivel de confianza.
+  \item \textbf{Conditional Value at Risk (CVaR)}: pérdida promedio en la cola de peores escenarios.
 \end{itemize}
 
-\subsection{Reestricciones del mundo real}
-Inicialmente el modelo de Markowitz consideraba sólo una restricción,
-la suma del peso de los activos debe de ser 1, en otras palabras, se
-tiene que usar todo el capital.
+\subsubsection{Métrica de riesgo prioritaria: CVaR}
+Dado que este trabajo se enfoca en mercados altamente volátiles, CVaR
+es una métrica adecuada porque captura la severidad de pérdidas
+extremas. Para un nivel de confianza $\alpha$, se puede expresar como:
+\begin{equation}
+  \mathrm{CVaR}_{\alpha}(L) = \mathbb{E}\left[L \mid L \ge \mathrm{VaR}_{\alpha}(L)\right]
+\end{equation}
+donde $L$ representa la pérdida del portafolio.
 
-\subsubsection{Limites minimos y maximos}
-Se imponen límites inferiores y/o superiores en los valores de cada
-peso activo, esto significa que un activo no puede representar menos
-o más que alguna proporción del capital total
+La métrica de \textit{maximum drawdown} puede incorporarse más adelante
+cuando se defina el análisis temporal de trayectorias de valor.
+
+\subsection{Formas de representar un portafolio}
+Representar un portafolio únicamente por pesos puede producir
+soluciones no factibles cuando no se respeta la restricción de
+presupuesto. Por ello, se han propuesto codificaciones alternativas
+que facilitan incorporar restricciones complejas y explorar el espacio
+de búsqueda.
+
+\subsubsection{Campo de bits por activo}
+El primer bit puede indicar posición larga o corta. Los bits restantes
+codifican un índice que apunta a una tabla de pesos posibles para cada
+activo.
+
+\subsubsection{Tipo mochila (\textit{knapsack})}
+Se usa un bit por activo: 1 para incluir y 0 para excluir. Esta
+representación prioriza la selección de activos más que la asignación
+exacta de pesos.
+
+\subsubsection{Códigos Gray}
+Es una variación de la codificación binaria donde solo un bit cambia
+entre dos valores consecutivos, lo cual puede reducir saltos bruscos
+en algoritmos evolutivos.
+
+\subsubsection{Representación híbrida}
+Combina dos partes dentro de un cromosoma:
+
 \begin{itemize}
-  \item Limite Inferior: No dedicar porcentajes muy pequeños del
-    capital a muchos valores (debido a que se generaron altos costos
-    de transacción)
-  \item Limite Superior: No asignar una proporción grande del capital
-    total a un activo, con el fin de minimizar el riesgo (Obligando a
-    diversificar)
+  \item Una parte para decidir qué activos se seleccionan.
+  \item Otra parte para asignar los pesos a los activos seleccionados.
+\end{itemize}
+
+\subsection{Restricciones del mundo real}
+El modelo base de Markowitz impone la restricción de presupuesto
+$\sum w_i = 1$. En aplicaciones reales suelen añadirse restricciones
+adicionales.
+
+\subsubsection{Límites mínimos y máximos}
+Se imponen cotas inferiores y superiores para cada peso:
+\begin{itemize}
+  \item \textbf{Límite inferior}: evita asignaciones demasiado pequeñas,
+    que pueden incrementar costos de transacción.
+  \item \textbf{Límite superior}: evita concentraciones excesivas y mejora
+    la diversificación.
 \end{itemize}
 
 \subsubsection{Cardinalidad}
-Esta restricción obliga al número de activos seleccionados en un
-portafolio. Existen dos versiones:
+Controla cuántos activos pueden componer el portafolio:
 \begin{itemize}
-  \item Exacta: Impone que el número de valores seleccionados sea
-    igual a un valor K
-  \item Suave: Proporciona limites inferiores e superiores para el
-    número de activos seleccionados, por ejemplo, al menos 5 y no más de 10
+  \item \textbf{Exacta}: exige exactamente $K$ activos.
+  \item \textbf{Suave}: fija un rango permitido de activos.
 \end{itemize}
 
-Cuando se impone esta restricción, no hay un método exacto para
-resolver el problema de optimización de portafolios, la frontera de
-pareto puede ser discontinua y/o no convexa, lo que causa
-dificultades si se usan algún acercamiento basado en funciones lineales
+Con cardinalidad, el problema suele volverse no convexo y más difícil
+de resolver con métodos exactos; por ello se usan penalizaciones o
+procedimientos de poda de activos de bajo peso.
 
-Las estrategias más comunes para manejar la cardinalidad es usar
-alguna función que penalice, también de los portafolios con una
-cardinalidad alta, se eliminan los activos con menor peso hasta
-cumplir con este valor K
+\subsubsection{Rotación}
+Mide el cambio de pesos respecto a una asignación previa. Es relevante
+en estrategias de horizonte largo para evitar costos excesivos por
+comisiones e impuestos. Una forma común de modelarla es:
+\begin{equation}
+  \sum_{i=1}^{n} |w_i^{(t)} - w_i^{(t-1)}| \le \tau
+\end{equation}
+donde $\tau$ es el límite máximo de rotación permitido.
 
-\subsubsection{Rotacion}
-Se refiere al cambio en el peso de los activos, respecto a una
-asignación anterior. Es útil cuando se considera una inversión
-durante un periodo largo. En el modelo tradicional, sin restricciones
-adicionales, el algoritmo puede proponer grandes cambios en la
-composición de los portafolios, y esto puede ser costoso porque se
-generan gastos  de comisión o impuestos.
-
-El objetivo es reducir costos por transacciones, mantener estabilidad
-en la estrategia y evitar cambios bruscos. La rotación se calcula
-como la suma de las diferencias absolutas entre los pesos nuevos y
-los anteriores. Si esta suma excede de un límite predefinido, la
-solución no es aceptada
-
-\section{Metaheuristica}
-La metaheurística es un campo de la informática y la optimización que
-se enfoca en el desarrollo de algoritmos de alto nivel para
-encontrar, de manera eficiente, soluciones aproximadas a problemas de
-optimización complejos, especialmente aquellos para los que no se
-conoce un algoritmo exacto o el tiempo de ejecución de un algoritmo
-exacto es largo. A diferencia de los métodos heurísticos simples, una
-metaheurística está diseñada para guiar el proceso de búsqueda a
-través del espacio de soluciones, evitando quedarse atrapada en
-óptimos locales y permitiendo una variedad más amplia de soluciones posibles.
+\section{Metaheurística}
+La metaheurística estudia estrategias generales para obtener
+soluciones aproximadas en problemas complejos, donde métodos exactos
+resultan inviables por costo computacional o estructura no convexa.
+Su objetivo es equilibrar exploración y explotación del espacio de
+búsqueda para evitar óptimos locales pobres.
 
 \subsection{Algoritmos bioinspirados}
-Toman su inspiración de procesos y comportamientos observados en la
-naturaleza y la biología, tales como el proceso de evolución, el
-comportamiento de enjambre, forrajeo (actividad de buscar alimentos)
-y el crecimiento de las plantas La idea principal detrás de estos
-algoritmos es imitar la eficiencia de la naturaleza para resolver
-problemas complejos.
+Los algoritmos bioinspirados se basan en procesos naturales, como
+evolución, inteligencia de enjambre, forrajeo o crecimiento de
+plantas. Su principal ventaja es la adaptabilidad frente a problemas
+de alta dimensionalidad, no linealidad y restricciones complejas.
 
-Tras un rápido crecimiento tecnológico, la complejidad computacional
-ha incrementado para resolver problemas del mundo real como:
-optimización,  clasificación, planeación y control. Estos
-problemas se caracterizan por su alta dimensionalidad, no linealidad,
-entornos dinámicos, los métodos tradicionales de optimización suelen
-quedar cortos contra estos problemas, debido a ser rígidos, las
-limitantes particulares son las combinaciones a gran escala o
-espacios de búsqueda enormes, donde la adaptabilidad y exploración
-son críticos.
+\section{Optimización por enjambre de partículas (PSO)}
+PSO, propuesto por Kennedy y Eberhart, se inspira en el comportamiento
+colectivo de parvadas y cardúmenes. Cada partícula representa una
+solución candidata y se mueve en el espacio de búsqueda con base en su
+experiencia individual y en la mejor experiencia grupal.
 
-\section{Optimizacion por enjambre de particulas (PSO)}
-Optimización de Enjambre de Partículas PSO
-Desarrollada por Kennedy y Eberhart, esta metaheurística tiene
-inspiración del comportamiento social observado en grupos de
-individuos dentro de: parvadas o cardúmenes. Este comportamiento se
-basa en la transmisión del suceso de cada individuo a los demás del
-grupo, esto resulta en satisfacer más rápido sus necesidades, como la
-localización de alimento o un lugar de cobijo.
-
-El algoritmo de PSO identifica la solución óptima explorando
-exhaustivamente el espacio de la función objetivo a través del ajuste
-sistemático de las rutas de cada individuo, llamado partícula. Cada
-partícula en el enjambre tiene propiedades inherentes como la
-posición y la velocidad, que les ayudan a moverse hacia una posición
-óptima, esta partícula tiene una tendencia a moverse aleatoriamente
-con la probabilidad de visitar un lugar inexplorado. Pero al mismo
-tiempo, cada partícula es atraída hacia su mejor posición personal
-(hasta la iteración actual), así como la mejor posición global del
-enjambre. El objetivo de PSO es encontrar la posición óptima en el
-espacio de búsqueda, considerando las mejores soluciones asociadas a
-cada partícula, este proceso termina cuando no hay mejora del valor
-de la función objetivo o se alcanza un límite de iteraciones.
+En cada iteración, la partícula actualiza su velocidad y posición para
+acercarse a regiones prometedoras de la función objetivo. El proceso
+finaliza al alcanzar un número máximo de iteraciones o cuando la
+mejora entre iteraciones es marginal.
 
 \subsection{Pseudocódigo}
 
 \subsection{Modelos de velocidad}
-\subsection{Topologias de comunicación}
+\subsection{Topologías de comunicación}

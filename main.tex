@@ -1,4 +1,8 @@
 \documentclass[12pt]{article}
+% % Esto le dice a LaTeX que numere hasta el nivel 4 (paragraph)
+% \setcounter{secnumdepth}{4}
+% % Esto incluye el nivel 4 en el Índice (ToC)
+% \setcounter{tocdepth}{4}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amssymb}
@@ -9,6 +13,7 @@
 \usepackage{minted}
 \usepackage{tabularx}
 \usepackage{booktabs} % Para lineas de tabla mas bonitas
+\usepackage{enumitem}
 \geometry{margin=2.5cm}
 
 \title{Optimización de portafolios de inversión en criptomonedas
@@ -22,7 +27,7 @@ mediante algoritmos bioinspirados}
 
 \tableofcontents
 \newpage
-
+% \input{sections/resumen}
 \input{sections/introduccion}
 \input{sections/marco_teorico}
 % \input{sections/metodologia}

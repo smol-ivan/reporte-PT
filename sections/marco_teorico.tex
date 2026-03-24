@@ -9,15 +9,15 @@ Al no existir ser descentralizado, no existe autoridad u organizacion
 que regule a una criptomoneda, por lo que para las transacciones es
 necesaria algun tipo de verificacion durante este proceso.
 
-\begin{description}
-  \item[$\bullet$] Que el monto sea correcto
-  \item[$\bullet$] Que el remitente tenga los fondos necerarios para
+\begin{itemize}
+  \item Que el monto sea correcto
+  \item Que el remitente tenga los fondos necerarios para
     la operacion
-  \item[$\bullet$] Asegurarse de que no haya duplicamiento de la unidad (moneda)
-\end{description}
+  \item Asegurarse de que no haya duplicamiento de la unidad (moneda)
+\end{itemize}
 
 El proceso de aseguramiento y verificacion durante la transaccion es
-parte de lo que se conoce "mineria".
+parte de lo que se conoce como "mineria".
 
 \subsubsection{Tipos de criptomonedas}
 
@@ -28,30 +28,21 @@ esta tabla enlista aquellas mas representativas.
 \begin{table}[ht]
   \centering
   \caption{Comparativa de Criptomonedas Principales}
-  \begin{tabularx}{\textwidth}{|X|X|X|X|}
-    \hline
+  \begin{tabularx}{\textwidth}{XXXX} % Sin líneas verticales (|)
+    \toprule % Línea gruesa superior
     \textbf{Bitcoin} & \textbf{Ethereum} & \textbf{Ripple} &
-    \textbf{Litecoin} \\ \hline
+    \textbf{Litecoin} \\ \midrule % Línea media
+
     Primera criptomoneda digital con fecha de publicación del 2009,
-    registra las transacciones en el ``Blockchain''. El sistema es
-    sustentado por nodos que resuelven problemas matemáticos
-    complejos (conocido como ``minería'') y además verificar la
-    compra o venta de Bitcoin. &
-    Lanzada en 2015, blockchain con una plataforma que permite
-    contratos inteligentes, aplicaciones pueden ser construidas
-    (desde herramientas financieras hasta juegos o bases de datos
-    complejas), el límite es la imaginación del desarrollador sin
-    caídas, fraudes, control o autoridad central. &
-    Se vio por primera vez en el 2012, se presenta como una red de
-    liquidación global en tiempo real que ofrece al instante y con un
-    costo bajo, pagos internacionales. Ofrece una alternativa a
-    bancos pagos transfronterizos a bajo costo y transparencia de
-    punto a punto. &
-    Creada por un graduado del MIT e ingeniero de Google. Es referido
-    comúnmente como la moneda de plata del oro de Bitcoin. Está
-    basada en una red de pago de código abierto. Es bastante parecida
-    a Bitcoin, su tasa de generación de bloques es alta así como su
-    tiempo de confirmación de transacciones. \\ \hline
+    registra las transacciones en el ``Blockchain''. &
+    Lanzada en 2015, plataforma que permite contratos inteligentes y
+    aplicaciones descentralizadas. &
+    Red de liquidación global en tiempo real que ofrece pagos
+    internacionales a bajo costo. &
+    Basada en código abierto, con una tasa de generación de bloques
+    más alta que Bitcoin. \\
+
+    \bottomrule % Línea inferior
   \end{tabularx}
 \end{table}
 
@@ -69,14 +60,14 @@ conexion del bloque nuevo con la referencia de los anteriores.
 
 Los componentes principales de un bloque son:
 
-\begin{description}
-  \item[$\bullet$] Un valor hash que referencia al bloque inmediato
+\begin{itemize}
+  \item Un valor hash que referencia al bloque inmediato
     que lo precede
-  \item[$\bullet$] Referencia propia
-  \item[$\bullet$] Fecha de creacion
-  \item[$\bullet$] Informacion: Transacciones hechas durante la
+  \item Referencia propia
+  \item Fecha de creacion
+  \item Informacion: Transacciones hechas durante la
     creacion del bloque
-\end{description}
+\end{itemize}
 
 \subsubsection{Como se sustenta el sistema}
 
@@ -97,20 +88,20 @@ hardware prendido y enfriarlo) y una huella enorme de carbón.
 Para que un bloque sea aceptado en el Blockchain, es necesario que se
 cumplan criterios especificos:
 
-\begin{description}
-  \item[$\bullet$] Todas las transacciones registradas tienen que ser LEGITIMAS
-  \item[$\bullet$] Fingerprint (Huella digital valida)
-\end{description}
+\begin{itemize}
+  \item Todas las transacciones registradas tienen que ser LEGITIMAS
+  \item Fingerprint (Huella digital valida)
+\end{itemize}
 
 Este `fingerprint` se logra al sacar el valor hash del bloque
 candidato usando la funcion hash dSHA256, no basta con obtener
 cualquier valor aleatorio, se requiere que esta huella tenga una
 caracteristica que lo haga unico (dificil de encontrar).
 
-\begin{description}
-  \item[$\bullet$] Valor debajo de un limite
-  \item[$\bullet$] Se deben de mostrar multiples ceros al inicio de la cadena
-\end{description}
+\begin{itemize}
+  \item Valor debajo de un limite
+  \item Se deben de mostrar multiples ceros al inicio de la cadena
+\end{itemize}
 
 Los mineros constantemente se encuentran resolviendo este problema de
 buscar entradas que devuelvan estos valores hash de alta rareza. Si
@@ -123,3 +114,95 @@ Bitcoins, y todo aquel participante recibe en proporción un premio en
 forma de una fracción de Bitcoin. a su vez, por cada ciertos bloques
 creados, el sistema disminuye gradualmente la cantidad de nuevos
 Bitcoin creados, este tiene un tope máximo de 21 millones de monedas
+
+\subsubsection{Volatilidad del mercado}
+
+La volatilidad extrema de las criptomonedas, en particular Bitcoin,
+puede explicarse por la falta de un valor intrínseco o fundamental
+que pueda servir como un ancla para su precio. en cambio, los precios
+se impulsan por el sentimiento del mercado, la especulación y las
+narrativas de los medios, lo que lleva a la formación de burbujas ya
+un compartimiento de efecto de rebaño entre los inversores
+
+\subsection{Optimizacion de Portafolios}
+
+De manera convencional, el manejo de portafolios se refiere al
+proceso de identificar, seleccionar y manejar un conjunto de
+inversiones. Estos procesos implican la selección de activos,
+asignación de recursos, seguimiento del rendimiento a través del
+tiempo y la actualización del portafolio.
+
+Los orígenes de este problema de optimización de portafolios hecha
+con un modelo matemático, datan desde las contribuciones que Harry
+Markowitz hizo en el año 1952 con su gran aporte que fue parteaguas
+para la economía financiera, formando la fundación de lo que hoy se
+conoce como Teoría del Portafolio Moderno. Desde entonces, este campo
+se ha vuelto inmenso.
+
+\begin{center}
+  \itshape
+  ``Optimización de portafolio, se puede definir como el uso de
+  métodos matemáticos que apoya la selección de portafolios de
+  activos a elección teniendo en cuenta la preferencia de toma de
+  decisiones, límites relevantes e incertidumbre''
+\end{center}
+
+Este problema matemático puede ser formulado de distintas maneras,
+pero los problemas principales se resumen en:
+
+\begin{enumerate}[label=\Roman*., leftmargin=1.5cm]
+  \item Minimizar el riesgo para un rendimiento establecido
+  \item Maximizar el rendimiento esperado dado un riesgo establecido
+  \item Minimizar el riesgo y maximizar el rendimiento esperado
+    usando un factor de rechazo de riesgo especificado
+  \item Minimizar el riesgo sin importar el rendimiento esperado
+  \item Maximizar el rendimiento sin importar el riesgo
+\end{enumerate}
+
+\subsubsection{Definiciones}
+\paragraph{Rendimento del activo:}
+Expresado como la tasa de rendimiento que se define durante un
+periodo de tiempo. Una perdida es representada como un valor negativo
+
+\paragraph{Portafolio:}
+Una colección de dos o más activos. El rendimiento esperado (por
+periodo) se define
+como la suma ponderada del rendimiento de cada activo, sujeto a que
+la suma total sea 1:
+\begin{gather}
+  R_p = \sum_{i=1}^{n} w_i R_i \\
+  \sum_{i=1}^{n} w_i = 1
+\end{gather}
+
+\paragraph{Short selling:}
+Es un proceso por el cual un inversionista que no posee un activo,
+define una posición en el mercado vendiendo el activo por anticipado,
+lo que provoca en una caída del precio. Esto matemáticamente se
+representa tomando el valor del activo como negativo. Para el modelo
+de Markowitz se excluye esta práctica.
+
+\paragraph{Portafolio eficiente:}
+Un portafolio factible es eficiente si tiene el máximo rendimiento
+esperado entre todos los portafolios con la misma varianza o
+alternativamente si tiene el menor riesgo entre todos los portafolios
+que tienen el mismo rendimiento esperado
+
+\paragraph{Frontera eficiente:}
+Es un concepto fundamental que permite visualizar las contras y
+ventajas entre riesgo/rendimiento, representa el conjunto de
+portafolios que proveen el rendimiento mas alto de acuerdo a un
+riesgo dado, o alternativamente llos portafolios que tienen un riesgo
+minimo segun un rendimiento dado.
+
+\subsubsection{Indicadores de riesgo}
+
+\paragraph{Varianza:}
+Dispersión de los rendimientos; mientras mayor
+sea, más inciertos son los resultados.
+\paragraph{Semivarianza:}Solo mide la dispersión hacia abajo (riesgo
+de pérdidas).
+\paragraph{Desviacion estandar:}Mide la volatilidad total de los activos.
+\paragraph{Value at Risk (VaR):}Pérdida máxima esperada dado un cierto
+nivel de confianza.
+\paragraph{Conditional Value at Risk (CVaR):} Pérdida promedio en los
+peores casos.

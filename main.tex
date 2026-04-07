@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \setcounter{secnumdepth}{4}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-noquoting,es-noshorthands]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amssymb}
@@ -10,8 +10,17 @@
 \usepackage{geometry}
 \usepackage{minted}
 \usepackage{tabularx}
-\usepackage{booktabs} % Para lineas de tabla mas bonitas
+\usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[ruled,lined,linesnumbered,spanish]{algorithm2e}
+\SetKwInput{KwEntrada}{Entrada}
+\SetKwInput{KwSalida}{Salida}
+\SetKwFor{Para}{para}{hacer}{fin}
+\SetKwFor{ParaCada}{para cada}{hacer}{fin}
+\SetKwIF{Si}{SiNo}{Otro}{si}{entonces}{en otro caso}{en otro caso}{fin}
+\SetKw{Hasta}{hasta}
+\SetKw{Regresar}{regresar}
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,

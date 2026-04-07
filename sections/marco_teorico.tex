@@ -106,6 +106,36 @@ influenciados por el sentimiento del mercado, la especulación y las
 narrativas mediáticas, lo cual favorece episodios de burbuja y efecto
 rebaño entre inversionistas.
 
+Para dimensionar esta volatilidad, es útil compararla con mercados
+tradicionales. La volatilidad anualizada de Bitcoin ha oscilado
+históricamente entre 60\% y 100\%, mientras que índices bursátiles
+como el S\&P 500 presentan volatilidades típicas de 15\% a 20\%. Esta
+diferencia implica que las fluctuaciones diarias en criptomonedas
+pueden ser de 5\% a 10\%, movimientos que en mercados tradicionales
+se considerarían eventos extremos.
+
+Las causas de esta alta volatilidad incluyen:
+
+\begin{itemize}
+  \item \textbf{Mercado relativamente pequeño:} menor liquidez
+    comparada con mercados tradicionales, lo que amplifica el impacto
+    de transacciones grandes.
+  \item \textbf{Operación continua:} el mercado opera 24/7, sin
+    pausas que permitan asimilar información.
+  \item \textbf{Sensibilidad a noticias:} anuncios regulatorios,
+    adopción institucional o eventos de seguridad generan
+    reacciones inmediatas.
+  \item \textbf{Comportamiento especulativo:} predominio de
+    inversionistas que buscan ganancias a corto plazo.
+\end{itemize}
+
+Esta volatilidad extrema tiene implicaciones directas para la
+optimización de portafolios. Los métodos tradicionales, que asumen
+distribuciones normales de rendimientos, subestiman la frecuencia de
+eventos extremos en criptomonedas. Por ello, se requieren enfoques
+que consideren las colas pesadas de la distribución y que puedan
+adaptarse a cambios abruptos en las condiciones del mercado.
+
 \section{Optimización de portafolios}
 
 El manejo de portafolios se refiere al proceso de identificar,
@@ -213,67 +243,224 @@ puede excluirse imponiendo $w_i \ge 0$.
 \subsubsection{Portafolio eficiente}
 Un portafolio factible es eficiente si maximiza el rendimiento
 esperado para un nivel de riesgo dado, o equivalentemente, minimiza
-el riesgo para un rendimiento esperado dado.
+el riesgo para un rendimiento esperado dado. En otras palabras, no
+existe otro portafolio que ofrezca mayor rendimiento sin incrementar
+el riesgo, ni uno que reduzca el riesgo sin sacrificar rendimiento.
+
+Este concepto es central en la teoría de Markowitz: entre todos los
+portafolios posibles, solo un subconjunto cumple con esta condición
+de eficiencia, y son precisamente estos los que un inversionista
+racional debería considerar.
 
 \subsubsection{Frontera eficiente}
-Es el conjunto de portafolios eficientes que describe el mejor
-intercambio posible entre riesgo y rendimiento.
+La frontera eficiente es la curva que representa gráficamente el
+conjunto de portafolios eficientes en el espacio riesgo-rendimiento.
+Cada punto sobre esta curva corresponde a una combinación óptima de
+activos para un nivel de riesgo específico.
+
+Geométricamente, la frontera tiene forma de hipérbola en el plano
+$(\sigma_p, \mu_p)$. Los portafolios ubicados por debajo de la
+frontera son subóptimos, ya que existe al menos un portafolio
+eficiente que ofrece mayor rendimiento para el mismo nivel de riesgo.
+Los portafolios por encima de la frontera no son alcanzables con los
+activos disponibles.
+
+El problema de optimización de portafolios consiste, en esencia, en
+encontrar puntos sobre esta frontera que satisfagan las preferencias
+del inversionista y las restricciones del problema.
 
 \subsection{Indicadores de riesgo}
 
-\begin{itemize}
-  \item \textbf{Varianza}: dispersión total de los rendimientos.
-  \item \textbf{Semivarianza}: dispersión únicamente por debajo de un umbral.
-  \item \textbf{Desviación estándar}: raíz de la varianza; mide volatilidad.
-  \item \textbf{Value at Risk (VaR)}: pérdida máxima esperada para un
-    nivel de confianza.
-  \item \textbf{Conditional Value at Risk (CVaR)}: pérdida promedio
-    en la cola de peores escenarios.
-\end{itemize}
+La medición del riesgo es fundamental para la optimización de
+portafolios. Existen diversas métricas, cada una con características
+que las hacen más o menos apropiadas según el contexto y los
+objetivos del inversionista.
 
-\subsubsection{CVaR}
-CVaR es una métrica adecuada para trabajar con una alta volatilidad
-porque captura la
-severidad de pérdidas extremas. Para un nivel de confianza $\alpha$,
-se puede expresar como:
+\subsubsection{Varianza y desviación estándar}
+
+La varianza mide la dispersión total de los rendimientos respecto a
+su media. Para un activo con rendimientos $r_1, r_2, \ldots, r_T$ y
+media $\bar{r}$, se define como:
+
+\begin{equation}
+  \sigma^2 = \frac{1}{T-1} \sum_{t=1}^{T} (r_t - \bar{r})^2
+\end{equation}
+
+La desviación estándar $\sigma$ es la raíz cuadrada de la varianza y
+se interpreta como la volatilidad del activo. Es la medida de riesgo
+utilizada en el modelo clásico de Markowitz.
+
+Una limitación de la varianza es que penaliza tanto las desviaciones
+positivas como las negativas, cuando en realidad solo las pérdidas
+representan riesgo para el inversionista.
+
+\subsubsection{Semivarianza}
+
+La semivarianza aborda la limitación anterior al considerar
+únicamente las desviaciones por debajo de un umbral $\tau$
+(típicamente la media o cero):
+
+\begin{equation}
+  SV = \frac{1}{T} \sum_{t=1}^{T} \min(r_t - \tau, 0)^2
+\end{equation}
+
+Esta métrica captura el riesgo de pérdida (\textit{downside risk})
+sin penalizar los rendimientos favorables. Su uso es apropiado cuando
+el inversionista tiene aversión asimétrica al riesgo.
+
+\subsubsection{Value at Risk (VaR)}
+
+El VaR representa la pérdida máxima esperada en un horizonte temporal
+dado, para un nivel de confianza $\alpha$ (comúnmente 95\% o 99\%).
+Formalmente, es el cuantil $\alpha$ de la distribución de pérdidas:
+
+\begin{equation}
+  \mathrm{VaR}_{\alpha}(L) = \inf \{ l \in \mathbb{R} : P(L \leq l)
+  \geq \alpha \}
+\end{equation}
+
+Por ejemplo, un VaR$_{95\%}$ de \$10,000 indica que existe un 95\% de
+probabilidad de que las pérdidas no excedan dicha cantidad.
+
+El VaR es ampliamente utilizado en la industria financiera por su
+interpretabilidad. Sin embargo, presenta limitaciones: no es una
+medida coherente de riesgo (no cumple la propiedad de subaditividad)
+y no proporciona información sobre la magnitud de las pérdidas cuando
+estas exceden el umbral.
+
+\subsubsection{Conditional Value at Risk (CVaR)}
+
+El CVaR, también conocido como Expected Shortfall, mide la pérdida
+promedio en los escenarios que exceden el VaR. Para un nivel de
+confianza $\alpha$:
+
 \begin{equation}
   \mathrm{CVaR}_{\alpha}(L) = \mathbb{E}\left[L \mid L
   \ge \mathrm{VaR}_{\alpha}(L)\right]
 \end{equation}
+
 donde $L$ representa la pérdida del portafolio.
 
+A diferencia del VaR, el CVaR es una medida coherente de riesgo y
+captura la severidad de las pérdidas extremas en la cola de la
+distribución. Esto lo hace particularmente adecuado para mercados con
+alta volatilidad, como el de criptomonedas, donde los eventos
+extremos son más frecuentes que en mercados tradicionales.
+
+Además, el CVaR tiene propiedades matemáticas favorables: es convexo,
+lo que facilita su uso en problemas de optimización.
+
+\subsubsection{Comparativa de indicadores}
+
+\begin{table}[ht]
+  \centering
+  \caption{Comparativa de indicadores de riesgo}
+  \label{tab:indicadores-riesgo}
+  \begin{tabularx}{\textwidth}{lXX}
+    \toprule
+    \textbf{Indicador} & \textbf{Ventajas} & \textbf{Limitaciones} \\
+    \midrule
+    Varianza &
+    Simple de calcular; ampliamente conocida; convexa &
+    Penaliza ganancias y pérdidas por igual \\
+    \addlinespace
+    Semivarianza &
+    Solo considera pérdidas; asimetría realista &
+    Mayor complejidad computacional; menos datos disponibles \\
+    \addlinespace
+    VaR &
+    Interpretación intuitiva; estándar regulatorio &
+    No es coherente; ignora magnitud de pérdidas extremas \\
+    \addlinespace
+    CVaR &
+    Coherente; captura colas; convexo &
+    Requiere estimación de distribución; sensible a datos extremos \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Para el contexto de criptomonedas, donde la distribución de
+rendimientos presenta colas pesadas y asimetría, el CVaR resulta
+especialmente apropiado al capturar el comportamiento en escenarios
+de pérdidas extremas.
+
+\subsection{Indicadores de desempeño}
+
+Además de las métricas de riesgo, existen indicadores que evalúan el
+desempeño de un portafolio considerando simultáneamente el
+rendimiento obtenido y el riesgo asumido.
+
+\subsubsection{Ratio de Sharpe}
+
+El ratio de Sharpe, propuesto por William Sharpe, mide el exceso de
+rendimiento por unidad de riesgo. Se define como:
+
+\begin{equation}
+  S = \frac{\mu_p - r_f}{\sigma_p}
+\end{equation}
+
+donde $\mu_p$ es el rendimiento esperado del portafolio, $r_f$ es la
+tasa libre de riesgo y $\sigma_p$ es la desviación estándar del
+portafolio.
+
+Un ratio de Sharpe mayor indica un mejor desempeño ajustado por
+riesgo. Esta métrica permite comparar portafolios con diferentes
+niveles de riesgo en una escala común y es ampliamente utilizada
+en la industria para evaluar estrategias de inversión.
+
+En el contexto de criptomonedas, donde no existe una tasa libre de
+riesgo claramente definida, es común utilizar $r_f = 0$ o una
+tasa de referencia del mercado tradicional.
+
+\subsubsection{Ratio de Sortino}
+
+El ratio de Sortino es una variante del Sharpe que utiliza la
+semivarianza en lugar de la desviación estándar, penalizando
+únicamente la volatilidad negativa:
+
+\begin{equation}
+  So = \frac{\mu_p - r_f}{\sigma_d}
+\end{equation}
+
+donde $\sigma_d$ es la desviación estándar de los rendimientos
+negativos (downside deviation). Este indicador es más apropiado
+cuando la distribución de rendimientos es asimétrica.
+
 \subsection{Formas de representar un portafolio}
-Representar un
-portafolio únicamente por pesos puede producir soluciones no
-factibles cuando no se respeta la restricción de presupuesto. Por
-ello, se han propuesto codificaciones alternativas que facilitan
-incorporar restricciones complejas y explorar el espacio de búsqueda.
+
+En el contexto de algoritmos metaheurísticos, la forma en que se
+codifica una solución afecta directamente la eficiencia de la
+búsqueda. Para el problema de optimización de portafolios, la
+representación más directa es un vector de pesos $\mathbf{w} = (w_1,
+w_2, \ldots, w_n)$, donde cada componente indica la proporción del
+capital asignada a cada activo.
+
+Sin embargo, esta representación directa puede generar soluciones no
+factibles durante el proceso de búsqueda, particularmente cuando se
+violan restricciones como $\sum w_i = 1$ o los límites individuales
+de cada peso. Por ello, se han propuesto codificaciones alternativas:
 
 \begin{itemize}
-  \item \textbf{Campo de bits por activo}
-    El primer bit puede indicar
-    posición larga o corta. Los bits restantes codifican un índice que
-    apunta a una tabla de pesos posibles para cada activo.
+  \item \textbf{Representación directa con reparación:} se utiliza el
+    vector de pesos directamente, pero se aplica un mecanismo de
+    normalización después de cada actualización para garantizar que
+    se cumplan las restricciones. Por ejemplo, dividiendo cada peso
+    entre la suma total: $w_i' = w_i / \sum_{j} w_j$.
 
-  \item \textbf{Tipo mochila (\textit{knapsack})}
-    Se usa un bit por
-    activo: 1 para incluir y 0 para excluir. Esta representación prioriza
-    la selección de activos más que la asignación exacta de pesos.
+  \item \textbf{Representación híbrida:} combina una parte binaria
+    para la selección de activos (cuáles incluir en el portafolio)
+    con una parte continua para la asignación de pesos. Es útil
+    cuando se imponen restricciones de cardinalidad.
 
-  \item \textbf{Códigos Gray}
-    Es una variación de la codificación
-    binaria donde solo un bit cambia entre dos valores consecutivos, lo
-    cual puede reducir saltos bruscos en algoritmos evolutivos.
-
-  \item \textbf{Representación híbrida}
-    Combina dos partes dentro de
-    un cromosoma:
-    \begin{itemize}
-      \item Una parte para decidir qué activos se seleccionan.
-      \item Otra parte para asignar los pesos a los activos seleccionados.
-    \end{itemize}
-
+  \item \textbf{Codificación indirecta:} en lugar de representar
+    pesos directamente, se codifican parámetros que luego se
+    transforman en pesos válidos mediante una función de decodificación.
 \end{itemize}
+
+La elección de la representación depende de las restricciones del
+problema y del algoritmo utilizado. Para algoritmos basados en
+movimiento continuo, como PSO, la representación directa con
+reparación suele ser la más natural y eficiente.
 
 \subsection{Restricciones del mundo real}
 El modelo base de Markowitz
@@ -310,18 +497,93 @@ común de modelarla es:
 \end{equation}
 donde $\tau$ es el límite máximo de rotación permitido.
 
-% \section{Metaheurística}
-% La metaheurística estudia estrategias generales para obtener
-% soluciones aproximadas en problemas complejos, donde métodos exactos
-% resultan inviables por costo computacional o estructura no convexa.
-% Su objetivo es equilibrar exploración y explotación del espacio de
-% búsqueda para evitar óptimos locales pobres.
-%
-% \subsection{Algoritmos bioinspirados}
-% Los algoritmos bioinspirados se basan en procesos naturales, como
-% evolución, inteligencia de enjambre, forrajeo o crecimiento de
-% plantas. Su principal ventaja es la adaptabilidad frente a problemas
-% de alta dimensionalidad, no linealidad y restricciones complejas.
+\section{Metaheurísticas y algoritmos bioinspirados}
+
+Las metaheurísticas son estrategias de alto nivel diseñadas para
+guiar procesos de búsqueda hacia soluciones de buena calidad en
+problemas de optimización complejos. A diferencia de los métodos
+exactos, que garantizan encontrar el óptimo global pero pueden
+requerir tiempos computacionales prohibitivos, las metaheurísticas
+buscan un equilibrio entre calidad de solución y eficiencia
+computacional.
+
+El problema de optimización de portafolios, particularmente cuando se
+incorporan restricciones como cardinalidad o límites de rotación,
+se convierte en un problema NP-difícil que no puede resolverse
+eficientemente con métodos exactos. En estos casos, las
+metaheurísticas ofrecen una alternativa práctica para obtener
+soluciones aproximadas de alta calidad.
+
+\subsection{Clasificación de metaheurísticas}
+
+Las metaheurísticas pueden clasificarse según diversos criterios:
+
+\begin{itemize}
+  \item \textbf{Basadas en trayectoria vs. poblacionales:} las
+    primeras trabajan con una única solución que se modifica
+    iterativamente (como búsqueda tabú o recocido simulado),
+    mientras que las segundas mantienen un conjunto de soluciones
+    que evolucionan en paralelo.
+
+  \item \textbf{Inspiración natural:} muchas metaheurísticas se
+    inspiran en procesos biológicos o físicos, como la evolución
+    (algoritmos genéticos), el comportamiento colectivo de animales
+    (inteligencia de enjambre) o el enfriamiento de metales (recocido
+    simulado).
+\end{itemize}
+
+\subsection{Algoritmos bioinspirados}
+
+Los algoritmos bioinspirados constituyen una familia de
+metaheurísticas que emulan mecanismos observados en la naturaleza.
+Su popularidad se debe a su capacidad para abordar problemas con
+espacios de búsqueda de alta dimensionalidad, funciones objetivo no
+diferenciables y restricciones complejas.
+
+Entre las principales categorías se encuentran:
+
+\begin{itemize}
+  \item \textbf{Algoritmos evolutivos:} inspirados en la teoría de la
+    evolución de Darwin, utilizan operadores de selección,
+    cruzamiento y mutación para evolucionar poblaciones de
+    soluciones. Ejemplos: algoritmos genéticos, estrategias
+    evolutivas, programación genética.
+
+  \item \textbf{Inteligencia de enjambre:} modelan el comportamiento
+    colectivo de grupos de organismos que, mediante interacciones
+    simples entre individuos, exhiben comportamientos emergentes
+    complejos. Ejemplos: optimización por enjambre de partículas
+    (PSO), optimización por colonia de hormigas (ACO), algoritmo de
+    abejas.
+\end{itemize}
+
+\subsection{Inteligencia de enjambre}
+
+La inteligencia de enjambre se refiere a la capacidad de sistemas
+compuestos por agentes simples para resolver problemas complejos
+mediante cooperación descentralizada. Cada agente sigue reglas
+locales sencillas, pero la interacción colectiva produce un
+comportamiento global inteligente.
+
+Características distintivas de estos algoritmos:
+
+\begin{itemize}
+  \item \textbf{Autoorganización:} el comportamiento global emerge
+    sin control centralizado.
+  \item \textbf{Comunicación indirecta:} los agentes comparten
+    información a través del entorno o mediante señales simples.
+  \item \textbf{Robustez:} el sistema tolera la pérdida de agentes
+    individuales sin colapsar.
+  \item \textbf{Flexibilidad:} capacidad de adaptarse a cambios en
+    el entorno.
+\end{itemize}
+
+Ejemplos naturales incluyen el comportamiento de parvadas de aves,
+cardúmenes de peces, colonias de hormigas y enjambres de abejas.
+Estos fenómenos han inspirado algoritmos de optimización que
+aprovechan la inteligencia colectiva para explorar eficientemente
+espacios de búsqueda complejos.
+
 \section{Optimización por enjambre de partículas (PSO)}
 
 La optimización por enjambre de partículas (PSO, por sus siglas en
@@ -363,6 +625,7 @@ donde:
   \item $c_1$ y $c_2$ son coeficientes de aceleración
   \item $r_1, r_2 \sim U(0,1)$ son valores aleatorios
 \end{itemize}
+
 \subsection{Componentes del algoritmo}
 
 Cada partícula dentro del enjambre posee los siguientes elementos:
@@ -379,60 +642,224 @@ El algoritmo opera de forma iterativa, evaluando la calidad de cada
 partícula mediante una función objetivo y actualizando sus parámetros
 en consecuencia.
 
+\subsection{Estructura del algoritmo}
+
+El Algoritmo~\ref{alg:pso} presenta el pseudocódigo de PSO. El
+proceso inicia con la generación aleatoria de posiciones y
+velocidades, seguido de un ciclo iterativo donde cada partícula
+actualiza su estado basándose en su experiencia y la del enjambre.
+
+\begin{algorithm}[H]
+\caption{PSO$(pob, c_1, c_2)$}
+\label{alg:pso}
+\KwEntrada{$pob$: tamaño del cúmulo de partículas\\
+\hspace{1.7cm}$c_1$: importancia del mejor valor personal\\
+\hspace{1.7cm}$c_2$: importancia del mejor valor global}
+\KwSalida{$g\_best$: mejor posición dentro del cúmulo}
+$P \gets \text{inicializar\_población}(pob)$\;
+\Para{$i \gets 1$ \Hasta $MAX\_ITER$}{
+  \ParaCada{partícula $p_i \in P$}{
+    $calidad \gets f(p_i)$ \tcp*{evalúa la función objetivo}
+    \Si{$calidad > f(p\_best_i)$}{
+      $p\_best_i \gets p_i$\;
+    }
+  }
+  $g\_best \gets \text{mejor } p\_best \in P$\;
+  \ParaCada{partícula $p_i \in P$}{
+    $v_i \gets v_i + c_1 * U(0,1) * (p\_best - p_i) + c_2 * U(0,1) * (g\_best - p_i)$\;
+    $p_i \gets p_i + v_i$\;
+  }
+}
+\Regresar $g\_best$\;
+\end{algorithm}
+
 \subsection{Topologías de comunicación}
 
-Las topologías de comunicación definen la forma en que las partículas
-comparten información dentro del enjambre, lo cual influye
-directamente en el comportamiento del algoritmo.
+Las topologías de comunicación definen cómo las partículas comparten
+información dentro del enjambre, lo cual influye directamente en el
+balance entre exploración y explotación del algoritmo.
 
-Entre los modelos más comunes se encuentran:
+La elección de la topología afecta dos aspectos fundamentales: la
+velocidad de convergencia y la capacidad de escapar de óptimos
+locales. Topologías con mayor conectividad aceleran la convergencia
+pero pueden provocar convergencia prematura; topologías más
+restringidas mantienen diversidad a costa de iteraciones adicionales.
 
-\begin{itemize}
-  \item \textbf{Modelo global (g\_best):} todas las partículas tienen
-    acceso a la mejor solución global. Este modelo favorece una
-    convergencia rápida, pero incrementa el riesgo de caer en óptimos locales.
+\subsubsection{Modelo global (\textit{gbest})}
 
-  \item \textbf{Modelo local (l\_best):} cada partícula se comunica
-    únicamente con un subconjunto de vecinos. Este enfoque mejora la
-    diversidad y robustez del algoritmo, aunque puede ralentizar la
-    convergencia.
-
-  \item \textbf{Modelo cognitivo:} las partículas se guían únicamente
-    por su mejor solución individual, promoviendo una alta
-    exploración del espacio de búsqueda.
-\end{itemize}
-\subsection{Modelos de velocidad}
-
-El modelo de velocidad en PSO determina la dinámica del movimiento de
-las partículas y el balance entre exploración y explotación.
-
-\subsubsection{Factor de inercia}
-
-Se introduce un parámetro $w$ que controla la influencia de la velocidad previa:
+En esta topología, todas las partículas tienen acceso a la mejor
+solución encontrada por cualquier miembro del enjambre. La ecuación
+de velocidad utiliza $g_{best}$ como atractor social:
 
 \begin{equation}
   v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2
   (g_{best} - x_i(t))
 \end{equation}
 
-Valores altos de $w$ favorecen la exploración, mientras que valores
-bajos promueven la explotación.
+Esta es la topología original propuesta por Kennedy y Eberhart.
+Su principal ventaja es la convergencia rápida, ya que todas las
+partículas se dirigen hacia la mejor región conocida. Sin embargo,
+en problemas multimodales (con múltiples óptimos locales), el
+enjambre puede quedar atrapado prematuramente en un óptimo local.
+
+\subsubsection{Modelo local (\textit{lbest})}
+
+Cada partícula solo se comunica con un subconjunto de vecinos,
+típicamente definido por un anillo donde cada partícula conoce a sus
+$k$ vecinos más cercanos en el índice del enjambre. En lugar de
+$g_{best}$, se utiliza $l_{best,i}$, la mejor posición entre los
+vecinos de la partícula $i$:
+
+\begin{equation}
+  v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2
+  (l_{best,i} - x_i(t))
+\end{equation}
+
+Esta topología preserva mayor diversidad en el enjambre y reduce el
+riesgo de convergencia prematura. La información sobre buenas
+regiones se propaga gradualmente, permitiendo que diferentes partes
+del enjambre exploren distintas áreas del espacio de búsqueda.
+
+\subsubsection{Consideraciones para la selección}
+
+Para problemas con paisajes de aptitud suaves y un solo óptimo
+global, la topología global suele ser preferible por su eficiencia.
+En problemas multimodales o con alta dimensionalidad, como la
+optimización de portafolios con restricciones, la topología local
+puede ofrecer mejores resultados al mantener la diversidad del
+enjambre.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparativa de topologías de comunicación en PSO}
+  \label{tab:topologias-pso}
+  \begin{tabularx}{\textwidth}{lXX}
+    \toprule
+    \textbf{Aspecto} & \textbf{Global (gbest)} & \textbf{Local (lbest)} \\
+    \midrule
+    Convergencia &
+    Rápida &
+    Más lenta, gradual \\
+    \addlinespace
+    Riesgo de óptimos locales &
+    Alto (convergencia prematura) &
+    Bajo (mayor exploración) \\
+    \addlinespace
+    Diversidad del enjambre &
+    Se reduce rápidamente &
+    Se mantiene por más tiempo \\
+    \addlinespace
+    Problemas recomendados &
+    Unimodales, convexos &
+    Multimodales, alta dimensionalidad \\
+    \addlinespace
+    Complejidad de implementación &
+    Simple &
+    Requiere definir vecindario \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Modelos de velocidad}
+
+El modelo de velocidad determina la dinámica del movimiento de las
+partículas y el balance entre exploración (búsqueda global) y
+explotación (refinamiento local). La formulación original de PSO
+presentaba problemas de convergencia, lo que motivó el desarrollo de
+variantes más estables.
+
+\subsubsection{Factor de inercia}
+
+Shi y Eberhart introdujeron el factor de inercia $w$ para controlar
+la influencia de la velocidad previa:
+
+\begin{equation}
+  v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2
+  (g_{best} - x_i(t))
+\end{equation}
+
+El parámetro $w$ regula el balance exploración-explotación:
+\begin{itemize}
+  \item $w > 1$: la partícula tiende a expandir su trayectoria
+    (mayor exploración, posible divergencia).
+  \item $w \approx 1$: comportamiento similar al PSO original.
+  \item $0 < w < 1$: la partícula desacelera gradualmente
+    (mayor explotación).
+\end{itemize}
+
+Una estrategia común es decrementar $w$ linealmente durante la
+ejecución, comenzando con valores altos ($\approx 0.9$) para
+explorar y terminando con valores bajos ($\approx 0.4$) para
+refinar las soluciones.
 
 \subsubsection{Factor de constricción}
 
-Se utiliza un factor $\chi$ para garantizar estabilidad en el algoritmo:
+Clerc y Kennedy propusieron el factor de constricción $\chi$ como
+alternativa para garantizar convergencia. Se deriva analíticamente
+de las condiciones de estabilidad del sistema:
 
 \begin{equation}
   v_i(t+1) = \chi \left[ v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2
   r_2 (g_{best} - x_i(t)) \right]
 \end{equation}
 
+donde:
+\begin{equation}
+  \chi = \frac{2}{\left| 2 - \phi - \sqrt{\phi^2 - 4\phi} \right|},
+  \quad \phi = c_1 + c_2, \quad \phi > 4
+\end{equation}
+
+Con valores típicos $c_1 = c_2 = 2.05$ (lo que da $\phi = 4.1$), se
+obtiene $\chi \approx 0.7298$. Esta formulación elimina la necesidad
+de limitar la velocidad máxima y proporciona convergencia garantizada.
+
 \subsubsection{PSO Barebones}
 
-En esta variante, se elimina el concepto de velocidad y la nueva
-posición se genera a partir de una distribución normal:
+Kennedy propuso esta variante simplificada que elimina completamente
+el concepto de velocidad. La nueva posición se muestrea de una
+distribución gaussiana centrada entre la mejor posición personal y
+la global:
 
 \begin{equation}
   x_i(t+1) \sim \mathcal{N} \left( \frac{p_{best,i} + g_{best}}{2},
   \left|p_{best,i} - g_{best}\right| \right)
 \end{equation}
+
+La media de la distribución es el punto medio entre $p_{best,i}$ y
+$g_{best}$, mientras que la desviación estándar es la distancia
+entre ambos. Esta formulación reduce el número de parámetros a
+ajustar y puede ser efectiva en problemas donde el ajuste de
+parámetros tradicionales resulta complejo.
+
+\subsubsection{Comparativa de modelos}
+
+\begin{table}[H]
+  \centering
+  \caption{Comparativa de modelos de velocidad en PSO}
+  \label{tab:modelos-velocidad}
+  \begin{tabularx}{\textwidth}{lXXl}
+    \toprule
+    \textbf{Modelo} & \textbf{Ventajas} & \textbf{Desventajas} & \textbf{Parámetros} \\
+    \midrule
+    PSO Original &
+    Simple de implementar &
+    Puede diverger; requiere límites de velocidad &
+    $c_1, c_2, v_{max}$ \\
+    \addlinespace
+    Factor de inercia &
+    Control explícito exploración/explotación &
+    Sensible al valor de $w$; requiere ajuste &
+    $w, c_1, c_2$ \\
+    \addlinespace
+    Constricción &
+    Convergencia garantizada; sin $v_{max}$ &
+    Menos flexible que inercia &
+    $\chi, c_1, c_2$ \\
+    \addlinespace
+    Barebones &
+    Pocos parámetros; evita ajuste fino &
+    Puede ser muy aleatorio; menos control &
+    Ninguno \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

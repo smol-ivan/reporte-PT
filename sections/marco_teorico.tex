@@ -134,29 +134,75 @@ Este problema puede formularse de distintas maneras:
 \end{enumerate}
 
 \subsection{Definiciones}
+
 \subsubsection{Rendimiento del activo}
-Es la tasa de ganancia o pérdida en un periodo de tiempo. Una pérdida
-se representa con un valor negativo.
+Es la tasa de ganancia o pérdida de un activo en un periodo de tiempo.
+Una pérdida se representa con un valor negativo.
+
+El rendimiento del activo $i$ en el periodo $t$ puede definirse como:
+
+\begin{equation}
+  r_{i,t} = \frac{p_{i,t} - p_{i,t-1} + d_{i,t}}{p_{i,t-1}}
+\end{equation}
+
+donde:
+\begin{itemize}
+  \item $p_{i,t}$ es el precio de cierre del activo $i$ en el periodo $t$
+  \item $p_{i,t-1}$ es el precio de cierre en el periodo anterior
+  \item $d_{i,t}$ representa los dividendos en el periodo $t$
+\end{itemize}
+
+El periodo de análisis puede ser diario, semanal, mensual o anual,
+dependiendo de la frecuencia de los datos utilizados.
 
 \subsubsection{Portafolio}
-Es una colección de dos o más activos. El rendimiento esperado del
-portafolio se define como la suma ponderada de los rendimientos
-individuales, con la restricción de presupuesto:
-\begin{gather}
-  R_p = \sum_{i=1}^{n} w_i R_i \\
-  \sum_{i=1}^{n} w_i = 1
-\end{gather}
 
-En notación vectorial, el rendimiento esperado del portafolio se
-escribe como:
+Sea un portafolio compuesto por $n$ activos, donde $w_i$ representa la
+proporción de capital invertida en el activo $i$, cumpliendo la
+restricción de presupuesto:
+
+\begin{equation}
+  \sum_{i=1}^{n} w_i = 1
+\end{equation}
+
+El rendimiento esperado del portafolio se define como:
+
+\begin{equation}
+  \mu_p = \sum_{i=1}^{n} w_i \mu_i
+\end{equation}
+
+donde $\mu_i$ es el rendimiento esperado del activo $i$.
+
+En notación vectorial:
+
 \begin{equation}
   \mu_p = \mathbf{w}^{\top}\boldsymbol{\mu}
 \end{equation}
 
-El riesgo del portafolio medido por varianza se expresa como:
+El riesgo del portafolio, medido mediante la varianza, se expresa como:
+
 \begin{equation}
   \sigma_p^2 = \mathbf{w}^{\top}\Sigma\mathbf{w}
 \end{equation}
+
+donde $\Sigma$ es la matriz de covarianzas entre los activos.
+
+\subsubsection{Modelo de media-varianza}
+
+El modelo clásico de Markowitz busca minimizar el riesgo del portafolio
+para un nivel de rendimiento esperado dado:
+
+\begin{align}
+  \min_{\mathbf{w}} \quad & \mathbf{w}^{\top}\Sigma\mathbf{w} \\
+  \text{sujeto a} \quad & \mathbf{w}^{\top}\boldsymbol{\mu} = \mu_0 \\
+  & \sum_{i=1}^{n} w_i = 1 \\
+  & w_i \geq 0, \quad i = 1, \dots, n
+\end{align}
+
+donde $\mu_0$ es el rendimiento objetivo del portafolio.
+
+Este modelo establece un compromiso entre riesgo y rendimiento,
+generando el conjunto de soluciones conocidas como portafolios eficientes.
 
 \subsubsection{Short selling}
 Es la venta de un activo que no se posee, con la expectativa de
@@ -174,118 +220,219 @@ Es el conjunto de portafolios eficientes que describe el mejor
 intercambio posible entre riesgo y rendimiento.
 
 \subsection{Indicadores de riesgo}
-Si no se pretende profundizar en todas las métricas en esta etapa,
-conviene listarlas de forma breve:
 
 \begin{itemize}
   \item \textbf{Varianza}: dispersión total de los rendimientos.
   \item \textbf{Semivarianza}: dispersión únicamente por debajo de un umbral.
   \item \textbf{Desviación estándar}: raíz de la varianza; mide volatilidad.
-  \item \textbf{Value at Risk (VaR)}: pérdida máxima esperada para un nivel de confianza.
-  \item \textbf{Conditional Value at Risk (CVaR)}: pérdida promedio en la cola de peores escenarios.
+  \item \textbf{Value at Risk (VaR)}: pérdida máxima esperada para un
+    nivel de confianza.
+  \item \textbf{Conditional Value at Risk (CVaR)}: pérdida promedio
+    en la cola de peores escenarios.
 \end{itemize}
 
-\subsubsection{Métrica de riesgo prioritaria: CVaR}
-Dado que este trabajo se enfoca en mercados altamente volátiles, CVaR
-es una métrica adecuada porque captura la severidad de pérdidas
-extremas. Para un nivel de confianza $\alpha$, se puede expresar como:
+\subsubsection{CVaR}
+CVaR es una métrica adecuada para trabajar con una alta volatilidad
+porque captura la
+severidad de pérdidas extremas. Para un nivel de confianza $\alpha$,
+se puede expresar como:
 \begin{equation}
-  \mathrm{CVaR}_{\alpha}(L) = \mathbb{E}\left[L \mid L \ge \mathrm{VaR}_{\alpha}(L)\right]
+  \mathrm{CVaR}_{\alpha}(L) = \mathbb{E}\left[L \mid L
+  \ge \mathrm{VaR}_{\alpha}(L)\right]
 \end{equation}
 donde $L$ representa la pérdida del portafolio.
 
-La métrica de \textit{maximum drawdown} puede incorporarse más adelante
-cuando se defina el análisis temporal de trayectorias de valor.
-
 \subsection{Formas de representar un portafolio}
-Representar un portafolio únicamente por pesos puede producir
-soluciones no factibles cuando no se respeta la restricción de
-presupuesto. Por ello, se han propuesto codificaciones alternativas
-que facilitan incorporar restricciones complejas y explorar el espacio
-de búsqueda.
-
-\subsubsection{Campo de bits por activo}
-El primer bit puede indicar posición larga o corta. Los bits restantes
-codifican un índice que apunta a una tabla de pesos posibles para cada
-activo.
-
-\subsubsection{Tipo mochila (\textit{knapsack})}
-Se usa un bit por activo: 1 para incluir y 0 para excluir. Esta
-representación prioriza la selección de activos más que la asignación
-exacta de pesos.
-
-\subsubsection{Códigos Gray}
-Es una variación de la codificación binaria donde solo un bit cambia
-entre dos valores consecutivos, lo cual puede reducir saltos bruscos
-en algoritmos evolutivos.
-
-\subsubsection{Representación híbrida}
-Combina dos partes dentro de un cromosoma:
+Representar un
+portafolio únicamente por pesos puede producir soluciones no
+factibles cuando no se respeta la restricción de presupuesto. Por
+ello, se han propuesto codificaciones alternativas que facilitan
+incorporar restricciones complejas y explorar el espacio de búsqueda.
 
 \begin{itemize}
-  \item Una parte para decidir qué activos se seleccionan.
-  \item Otra parte para asignar los pesos a los activos seleccionados.
+  \item \textbf{Campo de bits por activo}
+    El primer bit puede indicar
+    posición larga o corta. Los bits restantes codifican un índice que
+    apunta a una tabla de pesos posibles para cada activo.
+
+  \item \textbf{Tipo mochila (\textit{knapsack})}
+    Se usa un bit por
+    activo: 1 para incluir y 0 para excluir. Esta representación prioriza
+    la selección de activos más que la asignación exacta de pesos.
+
+  \item \textbf{Códigos Gray}
+    Es una variación de la codificación
+    binaria donde solo un bit cambia entre dos valores consecutivos, lo
+    cual puede reducir saltos bruscos en algoritmos evolutivos.
+
+  \item \textbf{Representación híbrida}
+    Combina dos partes dentro de
+    un cromosoma:
+    \begin{itemize}
+      \item Una parte para decidir qué activos se seleccionan.
+      \item Otra parte para asignar los pesos a los activos seleccionados.
+    \end{itemize}
+
 \end{itemize}
 
 \subsection{Restricciones del mundo real}
-El modelo base de Markowitz impone la restricción de presupuesto
-$\sum w_i = 1$. En aplicaciones reales suelen añadirse restricciones
-adicionales.
+El modelo base de Markowitz
+impone la restricción de presupuesto $\sum w_i = 1$. En aplicaciones
+reales suelen añadirse restricciones adicionales.
 
 \subsubsection{Límites mínimos y máximos}
-Se imponen cotas inferiores y superiores para cada peso:
+Se imponen cotas inferiores
+y superiores para cada peso:
 \begin{itemize}
-  \item \textbf{Límite inferior}: evita asignaciones demasiado pequeñas,
-    que pueden incrementar costos de transacción.
-  \item \textbf{Límite superior}: evita concentraciones excesivas y mejora
-    la diversificación.
+  \item \textbf{Límite inferior}: evita asignaciones demasiado
+    pequeñas, que pueden incrementar costos de transacción.
+  \item \textbf{Límite superior}: evita concentraciones excesivas y
+    mejora la diversificación.
 \end{itemize}
 
 \subsubsection{Cardinalidad}
-Controla cuántos activos pueden componer el portafolio:
+Controla cuántos activos pueden componer
+el portafolio:
 \begin{itemize}
   \item \textbf{Exacta}: exige exactamente $K$ activos.
   \item \textbf{Suave}: fija un rango permitido de activos.
-\end{itemize}
-
-Con cardinalidad, el problema suele volverse no convexo y más difícil
-de resolver con métodos exactos; por ello se usan penalizaciones o
-procedimientos de poda de activos de bajo peso.
-
+\end{itemize} Con cardinalidad, el problema suele volverse no convexo
+y más difícil de resolver con métodos exactos; por ello se usan
+penalizaciones o procedimientos de poda de activos de bajo peso
+.
 \subsubsection{Rotación}
-Mide el cambio de pesos respecto a una asignación previa. Es relevante
-en estrategias de horizonte largo para evitar costos excesivos por
-comisiones e impuestos. Una forma común de modelarla es:
+Mide el cambio de pesos respecto a una
+asignación previa. Es relevante en estrategias de horizonte largo
+para evitar costos excesivos por comisiones e impuestos. Una forma
+común de modelarla es:
 \begin{equation}
   \sum_{i=1}^{n} |w_i^{(t)} - w_i^{(t-1)}| \le \tau
 \end{equation}
 donde $\tau$ es el límite máximo de rotación permitido.
 
-\section{Metaheurística}
-La metaheurística estudia estrategias generales para obtener
-soluciones aproximadas en problemas complejos, donde métodos exactos
-resultan inviables por costo computacional o estructura no convexa.
-Su objetivo es equilibrar exploración y explotación del espacio de
-búsqueda para evitar óptimos locales pobres.
-
-\subsection{Algoritmos bioinspirados}
-Los algoritmos bioinspirados se basan en procesos naturales, como
-evolución, inteligencia de enjambre, forrajeo o crecimiento de
-plantas. Su principal ventaja es la adaptabilidad frente a problemas
-de alta dimensionalidad, no linealidad y restricciones complejas.
-
+% \section{Metaheurística}
+% La metaheurística estudia estrategias generales para obtener
+% soluciones aproximadas en problemas complejos, donde métodos exactos
+% resultan inviables por costo computacional o estructura no convexa.
+% Su objetivo es equilibrar exploración y explotación del espacio de
+% búsqueda para evitar óptimos locales pobres.
+%
+% \subsection{Algoritmos bioinspirados}
+% Los algoritmos bioinspirados se basan en procesos naturales, como
+% evolución, inteligencia de enjambre, forrajeo o crecimiento de
+% plantas. Su principal ventaja es la adaptabilidad frente a problemas
+% de alta dimensionalidad, no linealidad y restricciones complejas.
 \section{Optimización por enjambre de partículas (PSO)}
-PSO, propuesto por Kennedy y Eberhart, se inspira en el comportamiento
-colectivo de parvadas y cardúmenes. Cada partícula representa una
-solución candidata y se mueve en el espacio de búsqueda con base en su
-experiencia individual y en la mejor experiencia grupal.
 
-En cada iteración, la partícula actualiza su velocidad y posición para
-acercarse a regiones prometedoras de la función objetivo. El proceso
-finaliza al alcanzar un número máximo de iteraciones o cuando la
-mejora entre iteraciones es marginal.
+La optimización por enjambre de partículas (PSO, por sus siglas en
+inglés), propuesta por Kennedy y Eberhart, es una metaheurística
+inspirada en el comportamiento colectivo observado en sistemas
+naturales, como parvadas de aves o cardúmenes de peces.
 
-\subsection{Pseudocódigo}
+El algoritmo emplea un conjunto de agentes denominados partículas,
+donde cada partícula representa una solución candidata dentro del
+espacio de búsqueda. Estas partículas se desplazan ajustando su
+posición con base en su experiencia individual y en la mejor
+experiencia encontrada por el grupo.
 
-\subsection{Modelos de velocidad}
+En cada iteración, las partículas actualizan su velocidad y posición
+con el objetivo de acercarse a regiones prometedoras de la función
+objetivo. Este proceso continúa hasta alcanzar un número máximo de
+iteraciones o hasta que la mejora entre iteraciones sea marginal.
+
+Este mecanismo de cooperación permite balancear la exploración del
+espacio de búsqueda con la explotación de las mejores soluciones encontradas.
+
+\subsection{Modelo matemático}
+
+El comportamiento de cada partícula se define mediante dos ecuaciones
+principales: la actualización de la velocidad y la actualización de la posición.
+
+\begin{align}
+  v_i(t+1) &= v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2
+  (g_{best} - x_i(t)) \\
+  x_i(t+1) &= x_i(t) + v_i(t+1)
+\end{align}
+
+donde:
+\begin{itemize}
+  \item $x_i(t)$ representa la posición de la partícula $i$ en la iteración $t$
+  \item $v_i(t)$ es la velocidad de la partícula
+  \item $p_{best,i}$ es la mejor posición encontrada por la partícula
+  \item $g_{best}$ es la mejor posición global del enjambre
+  \item $c_1$ y $c_2$ son coeficientes de aceleración
+  \item $r_1, r_2 \sim U(0,1)$ son valores aleatorios
+\end{itemize}
+\subsection{Componentes del algoritmo}
+
+Cada partícula dentro del enjambre posee los siguientes elementos:
+
+\begin{itemize}
+  \item Posición: representa una solución candidata en el espacio de búsqueda.
+  \item Velocidad: determina la dirección y magnitud del movimiento.
+  \item Memoria individual ($p_{best}$): mejor solución encontrada
+    por la partícula.
+  \item Memoria global ($g_{best}$): mejor solución encontrada por el enjambre.
+\end{itemize}
+
+El algoritmo opera de forma iterativa, evaluando la calidad de cada
+partícula mediante una función objetivo y actualizando sus parámetros
+en consecuencia.
+
 \subsection{Topologías de comunicación}
+
+Las topologías de comunicación definen la forma en que las partículas
+comparten información dentro del enjambre, lo cual influye
+directamente en el comportamiento del algoritmo.
+
+Entre los modelos más comunes se encuentran:
+
+\begin{itemize}
+  \item \textbf{Modelo global (g\_best):} todas las partículas tienen
+    acceso a la mejor solución global. Este modelo favorece una
+    convergencia rápida, pero incrementa el riesgo de caer en óptimos locales.
+
+  \item \textbf{Modelo local (l\_best):} cada partícula se comunica
+    únicamente con un subconjunto de vecinos. Este enfoque mejora la
+    diversidad y robustez del algoritmo, aunque puede ralentizar la
+    convergencia.
+
+  \item \textbf{Modelo cognitivo:} las partículas se guían únicamente
+    por su mejor solución individual, promoviendo una alta
+    exploración del espacio de búsqueda.
+\end{itemize}
+\subsection{Modelos de velocidad}
+
+El modelo de velocidad en PSO determina la dinámica del movimiento de
+las partículas y el balance entre exploración y explotación.
+
+\subsubsection{Factor de inercia}
+
+Se introduce un parámetro $w$ que controla la influencia de la velocidad previa:
+
+\begin{equation}
+  v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2
+  (g_{best} - x_i(t))
+\end{equation}
+
+Valores altos de $w$ favorecen la exploración, mientras que valores
+bajos promueven la explotación.
+
+\subsubsection{Factor de constricción}
+
+Se utiliza un factor $\chi$ para garantizar estabilidad en el algoritmo:
+
+\begin{equation}
+  v_i(t+1) = \chi \left[ v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2
+  r_2 (g_{best} - x_i(t)) \right]
+\end{equation}
+
+\subsubsection{PSO Barebones}
+
+En esta variante, se elimina el concepto de velocidad y la nueva
+posición se genera a partir de una distribución normal:
+
+\begin{equation}
+  x_i(t+1) \sim \mathcal{N} \left( \frac{p_{best,i} + g_{best}}{2},
+  \left|p_{best,i} - g_{best}\right| \right)
+\end{equation}

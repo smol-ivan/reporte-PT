@@ -650,27 +650,28 @@ velocidades, seguido de un ciclo iterativo donde cada partícula
 actualiza su estado basándose en su experiencia y la del enjambre.
 
 \begin{algorithm}[H]
-\caption{PSO$(pob, c_1, c_2)$}
-\label{alg:pso}
-\KwEntrada{$pob$: tamaño del cúmulo de partículas\\
-\hspace{1.7cm}$c_1$: importancia del mejor valor personal\\
-\hspace{1.7cm}$c_2$: importancia del mejor valor global}
-\KwSalida{$g\_best$: mejor posición dentro del cúmulo}
-$P \gets \text{inicializar\_población}(pob)$\;
-\Para{$i \gets 1$ \Hasta $MAX\_ITER$}{
-  \ParaCada{partícula $p_i \in P$}{
-    $calidad \gets f(p_i)$ \tcp*{evalúa la función objetivo}
-    \Si{$calidad > f(p\_best_i)$}{
-      $p\_best_i \gets p_i$\;
+  \caption{PSO$(pob, c_1, c_2)$}
+  \label{alg:pso}
+  \KwEntrada{$pob$: tamaño del cúmulo de partículas\\
+    \hspace{1.7cm}$c_1$: importancia del mejor valor personal\\
+  \hspace{1.7cm}$c_2$: importancia del mejor valor global}
+  \KwSalida{$g\_best$: mejor posición dentro del cúmulo}
+  $P \gets \text{inicializar\_población}(pob)$\;
+  \Para{$i \gets 1$ \Hasta $MAX\_ITER$}{
+    \ParaCada{partícula $p_i \in P$}{
+      $calidad \gets f(p_i)$ \tcp*{evalúa la función objetivo}
+      \Si{$calidad > f(p\_best_i)$}{
+        $p\_best_i \gets p_i$\;
+      }
+    }
+    $g\_best \gets \text{mejor } p\_best \in P$\;
+    \ParaCada{partícula $p_i \in P$}{
+      $v_i \gets v_i + c_1 * U(0,1) * (p\_best - p_i) + c_2 * U(0,1)
+      * (g\_best - p_i)$\;
+      $p_i \gets p_i + v_i$\;
     }
   }
-  $g\_best \gets \text{mejor } p\_best \in P$\;
-  \ParaCada{partícula $p_i \in P$}{
-    $v_i \gets v_i + c_1 * U(0,1) * (p\_best - p_i) + c_2 * U(0,1) * (g\_best - p_i)$\;
-    $p_i \gets p_i + v_i$\;
-  }
-}
-\Regresar $g\_best$\;
+  \Regresar $g\_best$\;
 \end{algorithm}
 
 \subsection{Topologías de comunicación}
@@ -839,7 +840,8 @@ parámetros tradicionales resulta complejo.
   \label{tab:modelos-velocidad}
   \begin{tabularx}{\textwidth}{lXXl}
     \toprule
-    \textbf{Modelo} & \textbf{Ventajas} & \textbf{Desventajas} & \textbf{Parámetros} \\
+    \textbf{Modelo} & \textbf{Ventajas} & \textbf{Desventajas} &
+    \textbf{Parámetros} \\
     \midrule
     PSO Original &
     Simple de implementar &

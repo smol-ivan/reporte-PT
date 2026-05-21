@@ -328,3 +328,4 @@ TSWLatexianTemp*
 *.gz
 
 _minted/
+/main.pdf

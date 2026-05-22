@@ -350,6 +350,59 @@ extremos son más frecuentes que en mercados tradicionales.
 Además, el CVaR tiene propiedades matemáticas favorables: es convexo,
 lo que facilita su uso en problemas de optimización.
 
+\subsubsection{Estimación práctica de VaR y CVaR}
+
+En aplicaciones reales, estas métricas no se obtienen solo de forma
+teórica, sino a partir de una muestra histórica de rendimientos o
+mediante simulación. Los enfoques más utilizados son:
+
+\begin{itemize}
+  \item \textbf{Método histórico:} ordena las pérdidas observadas y
+    toma el cuantil correspondiente al nivel $\alpha$. Es simple y no
+    exige suponer una distribución específica.
+  \item \textbf{Método paramétrico:} asume una distribución para los
+    rendimientos o pérdidas; por ejemplo, si $L \sim \mathcal{N}
+    (\mu_L, \sigma_L^2)$, entonces
+    \begin{equation}
+      \mathrm{VaR}_{\alpha}(L) = \mu_L + \sigma_L z_{\alpha}
+      \qquad \text{y} \qquad
+      \mathrm{CVaR}_{\alpha}(L) = \mu_L + \sigma_L
+      \frac{\phi(z_{\alpha})}{1-\alpha}
+    \end{equation}
+    donde $z_{\alpha}$ es el cuantil de la normal estándar y
+    $\phi(\cdot)$ es su densidad.
+  \item \textbf{Simulación de Monte Carlo:} genera escenarios futuros
+    para estimar la distribución de pérdidas, especialmente útil cuando
+    se desea incorporar correlaciones entre activos o supuestos no
+    lineales.
+\end{itemize}
+
+Como ejemplo, si un portafolio presenta 100 rendimientos diarios y las
+5 peores pérdidas son 4.2\%, 4.6\%, 5.1\%, 6.0\% y 8.3\%, entonces el
+VaR$_{95\%}$ histórico es aproximadamente 4.2\% y el CVaR$_{95\%}$ es
+5.64\%. En un portafolio de \$1{,}000{,}000, ese CVaR implica una
+pérdida promedio esperada de \$56{,}400 en el peor 5\% de los casos.
+
+\subsubsection{Maximum Drawdown}
+
+El \textit{Maximum Drawdown} (MDD) mide la caída máxima acumulada desde
+un máximo histórico hasta un mínimo posterior durante un horizonte de
+tiempo. Si $P_t$ representa el valor del portafolio en el instante $t$,
+entonces:
+
+\begin{equation}
+  \mathrm{MDD} = \max_{1 \leq t \leq T}
+  \left(
+  \frac{\max_{1 \leq s \leq t} P_s - P_t}{\max_{1 \leq s \leq t} P_s}
+  \right)
+\end{equation}
+
+Esta métrica es especialmente útil en criptomonedas, porque resume
+caídas prolongadas que no siempre quedan bien representadas por la
+varianza o el VaR. En la práctica, complementa al CVaR cuando se desea
+evaluar no solo la severidad de las pérdidas, sino también su duración
+y profundidad.
+
 \subsubsection{Comparativa de indicadores}
 
 \begin{table}[ht]
@@ -375,6 +428,10 @@ lo que facilita su uso en problemas de optimización.
     CVaR &
     Coherente; captura colas; convexo &
     Requiere estimación de distribución; sensible a datos extremos \\
+    \addlinespace
+    Maximum Drawdown &
+    Fácil de interpretar; refleja caídas acumuladas &
+    No considera la frecuencia de recuperación ni la distribución completa \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -382,7 +439,9 @@ lo que facilita su uso en problemas de optimización.
 Para el contexto de criptomonedas, donde la distribución de
 rendimientos presenta colas pesadas y asimetría, el CVaR resulta
 especialmente apropiado al capturar el comportamiento en escenarios
-de pérdidas extremas.
+de pérdidas extremas. Sin embargo, el drawdown aporta una visión
+complementaria sobre la magnitud de las rachas bajistas, que también es
+crítica en mercados con alta volatilidad.
 
 \subsection{Indicadores de desempeño}
 

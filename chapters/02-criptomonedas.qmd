@@ -1,0 +1,65 @@
+# Criptomonedas
+
+Las criptomonedas son un sistema digital de intercambio descentralizado (*peer to peer*) en el que la criptografía se utiliza para generar y transferir valor. Al ser descentralizadas, no existe una autoridad única que las regule; por ello, en cada transacción se requiere un mecanismo de verificación:
+
+- Verificar que el monto sea correcto.
+- Verificar que el remitente tenga fondos suficientes.
+- Evitar el doble gasto de una misma unidad monetaria.
+
+Este proceso de aseguramiento y verificación forma parte de lo que se conoce como minería.
+
+## Tipos de criptomonedas
+
+El conjunto de criptomonedas más valiosas cambia con el tiempo. En la @tbl-cripto se presentan algunas de las más representativas.
+
+| **Bitcoin** | **Ethereum** | **Ripple** | **Litecoin** |
+|---|---|---|---|
+| Primera criptomoneda digital (2009); registra transacciones en la cadena de bloques. | Lanzada en 2015, permite contratos inteligentes y aplicaciones descentralizadas. | Red de liquidación global en tiempo real para pagos internacionales de bajo costo. | Basada en código abierto, con mayor tasa de generación de bloques que Bitcoin. |
+
+: Comparativa de criptomonedas principales {#tbl-cripto}
+
+Debido a su relevancia histórica y de mercado, Bitcoin se utiliza en este documento como referencia para explicar de manera general el fundamento, la creación y el mantenimiento de las criptomonedas.
+
+## Blockchain
+
+La *blockchain* de Bitcoin es, en esencia, un registro público que almacena todas las transacciones realizadas, además de la creación de nuevas unidades. La cadena se construye enlazando cada bloque nuevo con referencias criptográficas a bloques anteriores.
+
+Los componentes principales de un bloque son:
+
+- Un hash de referencia al bloque previo.
+- El hash propio del bloque.
+- Fecha de creación.
+- Información de transacciones incluidas.
+
+## Cómo se sustenta el sistema
+
+Para entender el mecanismo de Bitcoin, es necesario describir el rol del minero. Un minero recolecta transacciones, valida su legitimidad (monto correcto, fondos suficientes y ausencia de duplicados) y las agrupa como candidatas a bloque.
+
+Cualquier persona puede participar como minero con el software y una copia actualizada de la cadena de bloques. En la práctica, la minería se ha vuelto altamente competitiva por la demanda computacional, lo que implica hardware especializado y alto consumo energético.
+
+Para que un bloque sea aceptado, deben cumplirse condiciones básicas:
+
+- Todas las transacciones deben ser válidas.
+- El hash del bloque debe cumplir la condición de dificultad.
+
+Esa condición se obtiene al aplicar la función hash doble SHA-256 al bloque candidato. No basta cualquier resultado; el valor debe cumplir un criterio específico de rareza:
+
+- Estar por debajo de un umbral objetivo.
+- Presentar múltiples ceros iniciales en su representación.
+
+Cuando un minero encuentra un hash válido, el bloque se agrega a la cadena y el resto de la red puede verificarlo. Como incentivo, se otorga una recompensa en Bitcoin y comisiones de transacción. Además, la emisión de nuevos bitcoins disminuye de forma programada hasta un máximo de 21 millones de monedas.
+
+## Volatilidad del mercado
+
+La volatilidad de las criptomonedas, en particular de Bitcoin, suele relacionarse con la ausencia de un valor fundamental único que funcione como ancla de precio. En consecuencia, los movimientos se ven influenciados por el sentimiento del mercado, la especulación y las narrativas mediáticas, lo cual favorece episodios de burbuja y efecto rebaño entre inversionistas.
+
+Para dimensionar esta volatilidad, es útil compararla con mercados tradicionales. La volatilidad anualizada de Bitcoin ha oscilado históricamente entre 60% y 100%, mientras que índices bursátiles como el S&P 500 presentan volatilidades típicas de 15% a 20%. Esta diferencia implica que las fluctuaciones diarias en criptomonedas pueden ser de 5% a 10%, movimientos que en mercados tradicionales se considerarían eventos extremos.
+
+Las causas de esta alta volatilidad incluyen:
+
+- **Mercado relativamente pequeño:** menor liquidez comparada con mercados tradicionales, lo que amplifica el impacto de transacciones grandes.
+- **Operación continua:** el mercado opera 24/7, sin pausas que permitan asimilar información.
+- **Sensibilidad a noticias:** anuncios regulatorios, adopción institucional o eventos de seguridad generan reacciones inmediatas.
+- **Comportamiento especulativo:** predominio de inversionistas que buscan ganancias a corto plazo.
+
+Esta volatilidad extrema tiene implicaciones directas para la optimización de portafolios. Los métodos tradicionales, que asumen distribuciones normales de rendimientos, subestiman la frecuencia de eventos extremos en criptomonedas. Por ello, se requieren enfoques que consideren las colas pesadas de la distribución y que puedan adaptarse a cambios abruptos en las condiciones del mercado.

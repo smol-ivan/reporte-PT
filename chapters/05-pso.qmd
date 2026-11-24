@@ -1,0 +1,184 @@
+# Optimización por enjambre de partículas (PSO)
+
+La optimización por enjambre de partículas (PSO, por sus siglas en inglés), propuesta por Kennedy y Eberhart, es una metaheurística inspirada en el comportamiento colectivo observado en sistemas naturales, como parvadas de aves o cardúmenes de peces.
+
+El algoritmo emplea un conjunto de agentes denominados partículas, donde cada partícula representa una solución candidata dentro del espacio de búsqueda. Estas partículas se desplazan ajustando su posición con base en su experiencia individual y en la mejor experiencia encontrada por el grupo.
+
+En cada iteración, las partículas actualizan su velocidad y posición con el objetivo de acercarse a regiones prometedoras de la función objetivo. Este proceso continúa hasta alcanzar un número máximo de iteraciones o hasta que la mejora entre iteraciones sea marginal.
+
+Este mecanismo de cooperación permite balancear la exploración del espacio de búsqueda con la explotación de las mejores soluciones encontradas.
+
+## Modelo matemático
+
+El comportamiento de cada partícula se define mediante dos ecuaciones principales: la actualización de la velocidad y la actualización de la posición.
+
+$$\begin{aligned}
+  v_i(t+1) &= v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2 (g_{best} - x_i(t)) \\
+  x_i(t+1) &= x_i(t) + v_i(t+1)
+\end{aligned}$$
+
+donde:
+
+- $x_i(t)$ representa la posición de la partícula $i$ en la iteración $t$
+- $v_i(t)$ es la velocidad de la partícula
+- $p_{best,i}$ es la mejor posición encontrada por la partícula
+- $g_{best}$ es la mejor posición global del enjambre
+- $c_1$ y $c_2$ son coeficientes de aceleración
+- $r_1, r_2 \sim U(0,1)$ son valores aleatorios
+
+## Componentes del algoritmo
+
+Cada partícula dentro del enjambre posee los siguientes elementos:
+
+- **Posición:** representa una solución candidata en el espacio de búsqueda.
+- **Velocidad:** determina la dirección y magnitud del movimiento.
+- **Memoria individual ($p_{best}$):** mejor solución encontrada por la partícula.
+- **Memoria global ($g_{best}$):** mejor solución encontrada por el enjambre.
+
+El algoritmo opera de forma iterativa, evaluando la calidad de cada partícula mediante una función objetivo y actualizando sus parámetros en consecuencia.
+
+## Estructura del algoritmo
+
+El ciclo básico de ejecución de PSO se resume en el siguiente pseudocódigo:
+
+```pseudocode
+#| label: alg-pso
+#| caption: "Algoritmo de Optimización por Enjambre de Partículas (PSO)"
+Algoritmo PSO:
+  Entrada: Tamaño del enjambre N, iteraciones máximas T, c1, c2, w
+  Salida: Mejor posición global gbest y su valor f(gbest)
+
+  1. Inicializar posiciones X_i y velocidades V_i aleatoriamente, para i = 1, ..., N
+  2. Inicializar pbest_i = X_i y evaluar f(pbest_i)
+  3. Identificar gbest = argmin { f(pbest_i) }
+  4. Para t = 1 hasta T hacer:
+       Para cada partícula i = 1 hasta N hacer:
+         r1, r2 ~ Uniforme(0, 1)
+         V_i = w * V_i + c1 * r1 * (pbest_i - X_i) + c2 * r2 * (gbest - X_i)
+         X_i = X_i + V_i
+         Evaluar función objetivo f(X_i)
+         Si f(X_i) es mejor que f(pbest_i):
+           pbest_i = X_i
+         Fin Si
+       Fin Para
+       Actualizar gbest con el mejor pbest encontrado en la iteración
+     Fin Para
+  5. Retornar gbest y f(gbest)
+```
+
+A modo de referencia para la visualización de resultados experimentales conectados a una base de datos (PostgreSQL), el siguiente fragmento de código ilustra cómo graficar la curva de convergencia de una corrida:
+
+```python
+#| label: fig-convergencia
+#| fig-cap: "Ejemplo de curva de convergencia de PSO para el ratio de Sharpe."
+#| eval: false
+
+import psycopg2
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Conexión a la base de datos PostgreSQL
+# conn = psycopg2.connect("dbname=cripto user=postgres password=secret host=localhost")
+# query = "SELECT iteracion, mejor_fitness FROM corridas_pso WHERE run_id = 1 ORDER BY iteracion;"
+# df = pd.read_sql(query, conn)
+
+# 2. Datos simulados de referencia para la gráfica
+iteraciones = list(range(1, 101))
+sharpe_ratio = [1.2 + 0.9 * (1 - (0.95)**i) for i in iteraciones]
+
+# 3. Graficación con estilo limpio
+plt.figure(figsize=(7, 4))
+plt.plot(iteraciones, sharpe_ratio, color="#0d6efd", lw=2, label="Mejor Sharpe (gbest)")
+plt.title("Convergencia del Algoritmo PSO")
+plt.xlabel("Iteración")
+plt.ylabel("Ratio de Sharpe")
+plt.grid(True, linestyle="--", alpha=0.6)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+### Topologías de comunicación
+
+Las topologías de comunicación definen cómo las partículas comparten información dentro del enjambre, lo cual influye directamente en el balance entre exploración y explotación del algoritmo.
+
+La elección de la topología afecta dos aspectos fundamentales: la velocidad de convergencia y la capacidad de escapar de óptimos locales. Topologías con mayor conectividad aceleran la convergencia pero pueden provocar convergencia prematura; topologías más restringidas mantienen diversidad a costa de iteraciones adicionales.
+
+### Modelo global (*gbest*)
+
+En esta topología, todas las partículas tienen acceso a la mejor solución encontrada por cualquier miembro del enjambre. La ecuación de velocidad utiliza $g_{best}$ como atractor social:
+
+$$v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2 (g_{best} - x_i(t))$$
+
+Esta es la topología original propuesta por Kennedy y Eberhart. Su principal ventaja es la convergencia rápida, ya que todas las partículas se dirigen hacia la mejor región conocida. Sin embargo, en problemas multimodales (con múltiples óptimos locales), el enjambre puede quedar atrapado prematuramente en un óptimo local.
+
+### Modelo local (*lbest*)
+
+Cada partícula solo se comunica con un subconjunto de vecinos, típicamente definido por un anillo donde cada partícula conoce a sus $k$ vecinos más cercanos en el índice del enjambre. En lugar de $g_{best}$, se utiliza $l_{best,i}$, la mejor posición entre los vecinos de la partícula $i$:
+
+$$v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2 (l_{best,i} - x_i(t))$$
+
+Esta topología preserva mayor diversidad en el enjambre y reduce el riesgo de convergencia prematura. La información sobre buenas regiones se propaga gradualmente, permitiendo que diferentes partes del enjambre exploren distintas áreas del espacio de búsqueda.
+
+### Consideraciones para la selección
+
+Para problemas con paisajes de aptitud suaves y un solo óptimo global, la topología global suele ser preferible por su eficiencia. En problemas multimodales o con alta dimensionalidad, como la optimización de portafolios con restricciones, la topología local puede ofrecer mejores resultados al mantener la diversidad del enjambre.
+
+| Aspecto | Global (*gbest*) | Local (*lbest*) |
+|---|---|---|
+| **Convergencia** | Rápida | Más lenta, gradual |
+| **Riesgo de óptimos locales** | Alto (convergencia prematura) | Bajo (mayor exploración) |
+| **Diversidad del enjambre** | Se reduce rápidamente | Se mantiene por más tiempo |
+| **Problemas recomendados** | Unimodales, convexos | Multimodales, alta dimensionalidad |
+| **Complejidad de implementación** | Simple | Requiere definir vecindario |
+
+: Comparativa de topologías de comunicación en PSO {#tbl-topologias-pso}
+
+## Modelos de velocidad
+
+El modelo de velocidad determina la dinámica del movimiento de las partículas y el balance entre exploración (búsqueda global) y explotación (refinamiento local). La formulación original de PSO presentaba problemas de convergencia, lo que motivó el desarrollo de variantes más estables.
+
+### Factor de inercia
+
+Shi y Eberhart introdujeron el factor de inercia $w$ para controlar la influencia de la velocidad previa:
+
+$$v_i(t+1) = w v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2 (g_{best} - x_i(t))$$
+
+El parámetro $w$ regula el balance exploración-explotación:
+
+- $w > 1$: la partícula tiende a expandir su trayectoria (mayor exploración, posible divergencia).
+- $w \approx 1$: comportamiento similar al PSO original.
+- $0 < w < 1$: la partícula desacelera gradualmente (mayor explotación).
+
+Una estrategia común es decrementar $w$ linealmente durante la ejecución, comenzando con valores altos ($\approx 0.9$) para explorar y terminando con valores bajos ($\approx 0.4$) para refinar las soluciones.
+
+### Factor de constricción
+
+Clerc y Kennedy propusieron el factor de constricción $\chi$ como alternativa para garantizar convergencia. Se deriva analíticamente de las condiciones de estabilidad del sistema:
+
+$$v_i(t+1) = \chi \left[ v_i(t) + c_1 r_1 (p_{best,i} - x_i(t)) + c_2 r_2 (g_{best} - x_i(t)) \right]$$
+
+donde:
+
+$$\chi = \frac{2}{\left| 2 - \phi - \sqrt{\phi^2 - 4\phi} \right|}, \quad \phi = c_1 + c_2, \quad \phi > 4$$
+
+Con valores típicos $c_1 = c_2 = 2.05$ (lo que da $\phi = 4.1$), se obtiene $\chi \approx 0.7298$. Esta formulación elimina la necesidad de limitar la velocidad máxima y proporciona convergencia garantizada.
+
+### PSO Barebones
+
+Kennedy propuso esta variante simplificada que elimina completamente el concepto de velocidad. La nueva posición se muestrea de una distribución gaussiana centrada entre la mejor posición personal y la global:
+
+$$x_i(t+1) \sim \mathcal{N} \left( \frac{p_{best,i} + g_{best}}{2}, \left|p_{best,i} - g_{best}\right| \right)$$
+
+La media de la distribución es el punto medio entre $p_{best,i}$ y $g_{best}$, mientras que la desviación estándar es la distancia entre ambos. Esta formulación reduce el número de parámetros a ajustar y puede ser efectiva en problemas donde el ajuste de parámetros tradicionales resulta complejo.
+
+### Comparativa de modelos
+
+| Modelo | Ventajas | Desventajas | Parámetros |
+|---|---|---|---|
+| **PSO Original** | Simple de implementar | Puede diverger; requiere límites de velocidad | $c_1, c_2, v_{\max}$ |
+| **Factor de inercia** | Control explícito exploración/explotación | Sensible al valor de $w$; requiere ajuste | $w, c_1, c_2$ |
+| **Constricción** | Convergencia garantizada; sin $v_{\max}$ | Menos flexible que inercia | $\chi, c_1, c_2$ |
+| **Barebones** | Pocos parámetros; evita ajuste fino | Puede ser muy aleatorio; menos control | Ninguno |
+
+: Comparativa de modelos de velocidad en PSO {#tbl-modelos-velocidad}

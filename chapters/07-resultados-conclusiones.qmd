@@ -1,0 +1,7 @@
+# Resultados
+
+<!-- Aquí puedes incluir bloques de código interactivos o gráficos con matplotlib/plotly -->
+
+# Análisis de resultados
+
+# Conclusiones

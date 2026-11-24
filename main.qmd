@@ -1,0 +1,41 @@
+---
+title: Optimización de portafolios de inversión de criptomonedas
+author:
+  - name: Ivan Javier Gordillo Solis
+    email: gordillosolis@icloud.com
+    affiliations:
+      - name: Ingenieria en Computacion
+abstract: |
+  En este trabajo se propone el uso de algoritmos bioinspirados para la optimización de portafolios de criptomonedas, analizando la dinámica riesgo-rendimiento en mercados altamente volátiles mediante Optimización por Enjambre de Partículas (PSO).
+lang: es
+crossref:
+  tbl-title: "Tabla"
+  tbl-prefix: "Tabla"
+  fig-title: "Figura"
+  fig-prefix: "Figura"
+  sec-prefix: "Sección"
+  eq-prefix: "Ecuación"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    html-math-method: mathjax
+execute:
+  echo: true
+---
+
+{{< include chapters/01-introduccion.qmd >}}
+
+{{< include chapters/02-criptomonedas.qmd >}}
+
+{{< include chapters/03-optimizacion-portafolios.qmd >}}
+
+{{< include chapters/04-metaheuristicas.qmd >}}
+
+{{< include chapters/05-pso.qmd >}}
+
+{{< include chapters/06-metodologia.qmd >}}
+
+{{< include chapters/07-resultados-conclusiones.qmd >}}

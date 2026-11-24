@@ -1,0 +1,230 @@
+# Optimización de portafolios
+
+El manejo de portafolios se refiere al proceso de identificar, seleccionar y administrar un conjunto de inversiones. Esto incluye la asignación de recursos, el seguimiento del desempeño y la actualización del portafolio en el tiempo.
+
+El problema de optimización de portafolios se formalizó con el trabajo de Harry Markowitz (1952), base de la Teoría Moderna del Portafolio.
+
+> *"La optimización de portafolios puede definirse como el uso de métodos matemáticos para seleccionar activos considerando preferencias de decisión, restricciones relevantes e incertidumbre."*
+
+Este problema puede formularse de distintas maneras:
+
+1. Minimizar el riesgo para un rendimiento objetivo.
+2. Maximizar el rendimiento esperado para un nivel de riesgo dado.
+3. Balancear riesgo y rendimiento con un factor de aversión al riesgo.
+4. Minimizar el riesgo sin imponer meta de rendimiento.
+5. Maximizar el rendimiento sin imponer límite de riesgo.
+
+## Definiciones
+
+### Rendimiento del activo
+
+Es la tasa de ganancia o pérdida de un activo en un periodo de tiempo. Una pérdida se representa con un valor negativo.
+
+El rendimiento del activo $i$ en el periodo $t$ puede definirse como:
+
+$$r_{i,t} = \frac{p_{i,t} - p_{i,t-1} + d_{i,t}}{p_{i,t-1}}$$
+
+donde:
+
+- $p_{i,t}$ es el precio de cierre del activo $i$ en el periodo $t$
+- $p_{i,t-1}$ es el precio de cierre en el periodo anterior
+- $d_{i,t}$ representa los dividendos en el periodo $t$
+
+El periodo de análisis puede ser diario, semanal, mensual o anual, dependiendo de la frecuencia de los datos utilizados.
+
+### Portafolio
+
+Sea un portafolio compuesto por $n$ activos, donde $w_i$ representa la proporción de capital invertida en el activo $i$, cumpliendo la restricción de presupuesto:
+
+$$\sum_{i=1}^{n} w_i = 1$$
+
+El rendimiento esperado del portafolio se define como:
+
+$$\mu_p = \sum_{i=1}^{n} w_i \mu_i$$
+
+donde $\mu_i$ es el rendimiento esperado del activo $i$.
+
+En notación vectorial:
+
+$$\mu_p = \mathbf{w}^{\top}\boldsymbol{\mu}$$
+
+El riesgo del portafolio, medido mediante la varianza, se expresa como:
+
+$$\sigma_p^2 = \mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}$$
+
+donde $\boldsymbol{\Sigma}$ es la matriz de covarianzas entre los activos.
+
+### Modelo de media-varianza
+
+El modelo clásico de Markowitz busca minimizar el riesgo del portafolio para un nivel de rendimiento esperado dado:
+
+$$\begin{aligned}
+  \min_{\mathbf{w}} \quad & \mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w} \\
+  \text{sujeto a} \quad & \mathbf{w}^{\top}\boldsymbol{\mu} = \mu_0 \\
+  & \sum_{i=1}^{n} w_i = 1 \\
+  & w_i \geq 0, \quad i = 1, \dots, n
+\end{aligned}$$
+
+donde $\mu_0$ es el rendimiento objetivo del portafolio.
+
+Este modelo establece un compromiso entre riesgo y rendimiento, generando el conjunto de soluciones conocidas como portafolios eficientes.
+
+### Short selling
+
+Es la venta de un activo que no se posee, con la expectativa de recomprarlo a menor precio. En términos de modelado, suele asociarse a pesos negativos. En el modelo clásico de Markowitz, esta práctica puede excluirse imponiendo $w_i \ge 0$.
+
+### Portafolio eficiente
+
+Un portafolio factible es eficiente si maximiza el rendimiento esperado para un nivel de riesgo dado, o equivalentemente, minimiza el riesgo para un rendimiento esperado dado. En otras palabras, no existe otro portafolio que ofrezca mayor rendimiento sin incrementar el riesgo, ni uno que reduzca el riesgo sin sacrificar rendimiento.
+
+Este concepto es central en la teoría de Markowitz: entre todos los portafolios posibles, solo un subconjunto cumple con esta condición de eficiencia, y son precisamente estos los que un inversionista racional debería considerar.
+
+### Frontera eficiente
+
+La frontera eficiente es la curva que representa gráficamente el conjunto de portafolios eficientes en el espacio riesgo-rendimiento. Cada punto sobre esta curva corresponde a una combinación óptima de activos para un nivel de riesgo específico.
+
+Geométricamente, la frontera tiene forma de hipérbola en el plano $(\sigma_p, \mu_p)$. Los portafolios ubicados por debajo de la frontera son subóptimos, ya que existe al menos un portafolio eficiente que ofrece mayor rendimiento para el mismo nivel de riesgo. Los portafolios por encima de la frontera no son alcanzables con los activos disponibles.
+
+El problema de optimización de portafolios consiste, en esencia, en encontrar puntos sobre esta frontera que satisfagan las preferencias del inversionista y las restricciones del problema.
+
+## Indicadores de riesgo
+
+La medición del riesgo es fundamental para la optimización de portafolios. Existen diversas métricas, cada una con características que las hacen más o menos apropiadas según el contexto y los objetivos del inversionista.
+
+### Varianza y desviación estándar
+
+La varianza mide la dispersión total de los rendimientos respecto a su media. Para un activo con rendimientos $r_1, r_2, \ldots, r_T$ y media $\bar{r}$, se define como:
+
+$$\sigma^2 = \frac{1}{T-1} \sum_{t=1}^{T} (r_t - \bar{r})^2$$
+
+La desviación estándar $\sigma$ es la raíz cuadrada de la varianza y se interpreta como la volatilidad del activo. Es la medida de riesgo utilizada en el modelo clásico de Markowitz.
+
+Una limitación de la varianza es que penaliza tanto las desviaciones positivas como las negativas, cuando en realidad solo las pérdidas representan riesgo para el inversionista.
+
+### Semivarianza
+
+La semivarianza aborda la limitación anterior al considerar únicamente las desviaciones por debajo de un umbral $\tau$ (típicamente la media o cero):
+
+$$SV = \frac{1}{T} \sum_{t=1}^{T} \min(r_t - \tau, 0)^2$$
+
+Esta métrica captura el riesgo de pérdida (*downside risk*) sin penalizar los rendimientos favorables. Su uso es apropiado cuando el inversionista tiene aversión asimétrica al riesgo.
+
+### Value at Risk (VaR)
+
+El VaR representa la pérdida máxima esperada en un horizonte temporal dado, para un nivel de confianza $\alpha$ (comúnmente 95% o 99%). Formalmente, es el cuantil $\alpha$ de la distribución de pérdidas:
+
+$$\mathrm{VaR}_{\alpha}(L) = \inf \{ l \in \mathbb{R} : P(L \leq l) \geq \alpha \}$$
+
+Por ejemplo, un $\mathrm{VaR}_{95\%}$ de \$10,000 indica que existe un 95% de probabilidad de que las pérdidas no excedan dicha cantidad.
+
+El VaR es ampliamente utilizado en la industria financiera por su interpretabilidad. Sin embargo, presenta limitaciones: no es una medida coherente de riesgo (no cumple la propiedad de subaditividad) y no proporciona información sobre la magnitud de las pérdidas cuando estas exceden el umbral.
+
+### Conditional Value at Risk (CVaR)
+
+El CVaR, también conocido como Expected Shortfall, mide la pérdida promedio en los escenarios que exceden el VaR. Para un nivel de confianza $\alpha$:
+
+$$\mathrm{CVaR}_{\alpha}(L) = \mathbb{E}\left[L \mid L \ge \mathrm{VaR}_{\alpha}(L)\right]$$
+
+donde $L$ representa la pérdida del portafolio.
+
+A diferencia del VaR, el CVaR es una medida coherente de riesgo y captura la severidad de las pérdidas extremas en la cola de la distribución. Esto lo hace particularmente adecuado para mercados con alta volatilidad, como el de criptomonedas, donde los eventos extremos son más frecuentes que en mercados tradicionales.
+
+Además, el CVaR tiene propiedades matemáticas favorables: es convexo, lo que facilita su uso en problemas de optimización.
+
+### Estimación práctica de VaR y CVaR
+
+En aplicaciones reales, estas métricas no se obtienen solo de forma teórica, sino a partir de una muestra histórica de rendimientos o mediante simulación. Los enfoques más utilizados son:
+
+- **Método histórico:** ordena las pérdidas observadas y toma el cuantil correspondiente al nivel $\alpha$. Es simple y no exige suponer una distribución específica.
+- **Método paramétrico:** asume una distribución para los rendimientos o pérdidas; por ejemplo, si $L \sim \mathcal{N}(\mu_L, \sigma_L^2)$, entonces:
+  $$\mathrm{VaR}_{\alpha}(L) = \mu_L + \sigma_L z_{\alpha} \qquad \text{y} \qquad \mathrm{CVaR}_{\alpha}(L) = \mu_L + \sigma_L \frac{\phi(z_{\alpha})}{1-\alpha}$$
+  donde $z_{\alpha}$ es el cuantil de la normal estándar y $\phi(\cdot)$ es su densidad.
+- **Simulación de Monte Carlo:** genera escenarios futuros para estimar la distribución de pérdidas, especialmente útil cuando se desea incorporar correlaciones entre activos o supuestos no lineales.
+
+Como ejemplo, si un portafolio presenta 100 rendimientos diarios y las 5 peores pérdidas son 4.2%, 4.6%, 5.1%, 6.0% y 8.3%, entonces el $\mathrm{VaR}_{95\%}$ histórico es aproximadamente 4.2% y el $\mathrm{CVaR}_{95\%}$ es 5.64%. En un portafolio de \$1,000,000, ese CVaR implica una pérdida promedio esperada de \$56,400 en el peor 5% de los casos.
+
+### Maximum Drawdown
+
+El *Maximum Drawdown* (MDD) mide la caída máxima acumulada desde un máximo histórico hasta un mínimo posterior durante un horizonte de tiempo. Si $P_t$ representa el valor del portafolio en el instante $t$, entonces:
+
+$$\mathrm{MDD} = \max_{1 \leq t \leq T} \left( \frac{\max_{1 \leq s \leq t} P_s - P_t}{\max_{1 \leq s \leq t} P_s} \right)$$
+
+Esta métrica es especialmente útil en criptomonedas, porque resume caídas prolongadas que no siempre quedan bien representadas por la varianza o el VaR. En la práctica, complementa al CVaR cuando se desea evaluar no solo la severidad de las pérdidas, sino también su duración y profundidad.
+
+### Comparativa de indicadores
+
+| Indicador | Ventajas | Limitaciones |
+|---|---|---|
+| **Varianza** | Simple de calcular; ampliamente conocida; convexa | Penaliza ganancias y pérdidas por igual |
+| **Semivarianza** | Solo considera pérdidas; asimetría realista | Mayor complejidad computacional; menos datos disponibles |
+| **VaR** | Interpretación intuitiva; estándar regulatorio | No es coherente; ignora magnitud de pérdidas extremas |
+| **CVaR** | Coherente; captura colas; convexo | Requiere estimación de distribución; sensible a datos extremos |
+| **Maximum Drawdown** | Fácil de interpretar; refleja caídas acumuladas | No considera la frecuencia de recuperación ni la distribución completa |
+
+: Comparativa de indicadores de riesgo {#tbl-indicadores-riesgo}
+
+Para el contexto de criptomonedas, donde la distribución de rendimientos presenta colas pesadas y asimetría, el CVaR resulta especialmente apropiado al capturar el comportamiento en escenarios de pérdidas extremas. Sin embargo, el drawdown aporta una visión complementaria sobre la magnitud de las rachas bajistas, que también es crítica en mercados con alta volatilidad.
+
+## Indicadores de desempeño
+
+Además de las métricas de riesgo, existen indicadores que evalúan el desempeño de un portafolio considerando simultáneamente el rendimiento obtenido y el riesgo asumido.
+
+### Ratio de Sharpe
+
+El ratio de Sharpe, propuesto por William Sharpe, mide el exceso de rendimiento por unidad de riesgo. Se define como:
+
+$$S = \frac{\mu_p - r_f}{\sigma_p}$$
+
+donde $\mu_p$ es el rendimiento esperado del portafolio, $r_f$ es la tasa libre de riesgo y $\sigma_p$ es la desviación estándar del portafolio.
+
+Un ratio de Sharpe mayor indica un mejor desempeño ajustado por riesgo. Esta métrica permite comparar portafolios con diferentes niveles de riesgo en una escala común y es ampliamente utilizada en la industria para evaluar estrategias de inversión.
+
+En el contexto de criptomonedas, donde no existe una tasa libre de riesgo claramente definida, es común utilizar $r_f = 0$ o una tasa de referencia del mercado tradicional.
+
+### Ratio de Sortino
+
+El ratio de Sortino es una variante del Sharpe que utiliza la semivarianza en lugar de la desviación estándar, penalizando únicamente la volatilidad negativa:
+
+$$So = \frac{\mu_p - r_f}{\sigma_d}$$
+
+donde $\sigma_d$ es la desviación estándar de los rendimientos negativos (*downside deviation*). Este indicador es más apropiado cuando la distribución de rendimientos es asimétrica.
+
+## Formas de representar un portafolio
+
+En el contexto de algoritmos metaheurísticos, la forma en que se codifica una solución afecta directamente la eficiencia de la búsqueda. Para el problema de optimización de portafolios, la representación más directa es un vector de pesos $\mathbf{w} = (w_1, w_2, \ldots, w_n)$, donde cada componente indica la proporción del capital asignada a cada activo.
+
+Sin embargo, esta representación directa puede generar soluciones no factibles durante el proceso de búsqueda, particularmente cuando se violan restricciones como $\sum w_i = 1$ o los límites individuales de cada peso. Por ello, se han propuesto codificaciones alternativas:
+
+- **Representación directa con reparación:** se utiliza el vector de pesos directamente, pero se aplica un mecanismo de normalización después de cada actualización para garantizar que se cumplan las restricciones. Por ejemplo, dividiendo cada peso entre la suma total: $w_i' = w_i / \sum_{j} w_j$.
+- **Representación híbrida:** combina una parte binaria para la selección de activos (cuáles incluir en el portafolio) con una parte continua para la asignación de pesos. Es útil cuando se imponen restricciones de cardinalidad.
+- **Codificación indirecta:** en lugar de representar pesos directamente, se codifican parámetros que luego se transforman en pesos válidos mediante una función de decodificación.
+
+La elección de la representación depende de las restricciones del problema y del algoritmo utilizado. Para algoritmos basados en movimiento continuo, como PSO, la representación directa con reparación suele ser la más natural y eficiente.
+
+## Restricciones del mundo real
+
+El modelo base de Markowitz impone la restricción de presupuesto $\sum w_i = 1$. En aplicaciones reales suelen añadirse restricciones adicionales.
+
+### Límites mínimos y máximos
+
+Se imponen cotas inferiores y superiores para cada peso:
+
+- **Límite inferior**: evita asignaciones demasiado pequeñas, que pueden incrementar costos de transacción.
+- **Límite superior**: evita concentraciones excesivas y mejora la diversificación.
+
+### Cardinalidad
+
+Controla cuántos activos pueden componer el portafolio:
+
+- **Exacta**: exige exactamente $K$ activos.
+- **Suave**: fija un rango permitido de activos.
+
+Con cardinalidad, el problema suele volverse no convexo y más difícil de resolver con métodos exactos; por ello se usan penalizaciones o procedimientos de poda de activos de bajo peso.
+
+### Rotación
+
+Mide el cambio de pesos respecto a una asignación previa. Es relevante en estrategias de horizonte largo para evitar costos excesivos por comisiones e impuestos. Una forma común de modelarla es:
+
+$$\sum_{i=1}^{n} |w_i^{(t)} - w_i^{(t-1)}| \le \tau$$
+
+donde $\tau$ es el límite máximo de rotación permitido.

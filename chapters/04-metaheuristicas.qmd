@@ -1,0 +1,34 @@
+# Metaheurísticas y algoritmos bioinspirados
+
+Las metaheurísticas son estrategias de alto nivel diseñadas para guiar procesos de búsqueda hacia soluciones de buena calidad en problemas de optimización complejos. A diferencia de los métodos exactos, que garantizan encontrar el óptimo global pero pueden requerir tiempos computacionales prohibitivos, las metaheurísticas buscan un equilibrio entre calidad de solución y eficiencia computacional.
+
+El problema de optimización de portafolios, particularmente cuando se incorporan restricciones como cardinalidad o límites de rotación, se convierte en un problema NP-difícil que no puede resolverse eficientemente con métodos exactos. En estos casos, las metaheurísticas ofrecen una alternativa práctica para obtener soluciones aproximadas de alta calidad.
+
+## Clasificación de metaheurísticas
+
+Las metaheurísticas pueden clasificarse según diversos criterios:
+
+- **Basadas en trayectoria vs. poblacionales:** las primeras trabajan con una única solución que se modifica iterativamente (como búsqueda tabú o recocido simulado), mientras que las segundas mantienen un conjunto de soluciones que evolucionan en paralelo.
+- **Inspiración natural:** muchas metaheurísticas se inspiran en procesos biológicos o físicos, como la evolución (algoritmos genéticos), el comportamiento colectivo de animales (inteligencia de enjambre) o el enfriamiento de metales (recocido simulado).
+
+## Algoritmos bioinspirados
+
+Los algoritmos bioinspirados constituyen una familia de metaheurísticas que emulan mecanismos observados en la naturaleza. Su popularidad se debe a su capacidad para abordar problemas con espacios de búsqueda de alta dimensionalidad, funciones objetivo no diferenciables y restricciones complejas.
+
+Entre las principales categorías se encuentran:
+
+- **Algoritmos evolutivos:** inspirados en la teoría de la evolución de Darwin, utilizan operadores de selección, cruzamiento y mutación para evolucionar poblaciones de soluciones. Ejemplos: algoritmos genéticos, estrategias evolutivas, programación genética.
+- **Inteligencia de enjambre:** modelan el comportamiento colectivo de grupos de organismos que, mediante interacciones simples entre individuos, exhiben comportamientos emergentes complejos. Ejemplos: optimización por enjambre de partículas (PSO), optimización por colonia de hormigas (ACO), algoritmo de abejas.
+
+## Inteligencia de enjambre
+
+La inteligencia de enjambre se refiere a la capacidad de sistemas compuestos por agentes simples para resolver problemas complejos mediante cooperación descentralizada. Cada agente sigue reglas locales sencillas, pero la interacción colectiva produce un comportamiento global inteligente.
+
+Características distintivas de estos algoritmos:
+
+- **Autoorganización:** el comportamiento global emerge sin control centralizado.
+- **Comunicación indirecta:** los agentes comparten información a través del entorno o mediante señales simples.
+- **Robustez:** el sistema tolera la pérdida de agentes individuales sin colapsar.
+- **Flexibilidad:** capacidad de adaptarse a cambios en el entorno.
+
+Ejemplos naturales incluyen el comportamiento de parvadas de aves, cardúmenes de peces, colonias de hormigas y enjambres de abejas. Estos fenómenos han inspirado algoritmos de optimización que aprovechan la inteligencia colectiva para explorar eficientemente espacios de búsqueda complejos.
